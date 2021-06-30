@@ -31,6 +31,7 @@ public enum BaseResponseStatus {
     FAILED_TO_FIND_BY_EMAIL_AND_STATUS(false, 3012, "email, status로 회원 정보 조회에 실패하였습니다."),
     FAILED_TO_ENCRYPT_PASSWORD(false, 3013, "password 암호화에 실패하였습니다."),
     FAILED_TO_SAVE_USER_INFO(false, 3014, "유저 정보 저장에 실패했습니다."),
+    FAILED_TO_DECRYPT_PASSWORD(false, 3015, "password 복호화에 실패하였습니다."),
 //    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
 //    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
 //    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),

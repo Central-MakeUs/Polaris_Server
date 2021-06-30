@@ -74,6 +74,49 @@ public class UserInfoController {
         }
     }
 
+    /**
+     * 로그인 API
+     * [POST] /users/login
+     * @RequestBody PostLoginReq
+     * @return BaseResponse<PostLoginRes>
+     */
+    @PostMapping("/login")
+    public BaseResponse<PostLoginRes> login(@RequestBody PostLoginReq postLoginReq) {
+        if (postLoginReq.getEmail() == null || postLoginReq.getEmail().length() == 0) {
+            return new BaseResponse<>(EMPTY_EMAIL);
+        } else if (!isRegexEmail(postLoginReq.getEmail())) {
+            return new BaseResponse<>(INVALID_EMAIL);
+        } else if (postLoginReq.getPassword() == null || postLoginReq.getPassword().length() == 0) {
+            return new BaseResponse<>(EMPTY_PASSWORD);
+        }
+
+        // 2. Login
+        try {
+            PostLoginRes postLoginRes = userInfoProvider.login(postLoginReq);
+            return new BaseResponse<>(SUCCESS, postLoginRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+//    /**
+//     * 자동로그인 API
+//     * [POST] /users/auto-login
+//     */
+//    @ResponseBody
+//    @PostMapping("/auto-login")
+//    public BaseResponse<Void> postAutoLogin() {
+//
+//        try {
+//            Integer userIdx = jwtService.getUserId();
+//            userInfoProvider.retrieveUserByUserIdx(userIdx);
+//            return new BaseResponse<>(SUCCESS);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
+//
+//
 
 
 //    /**
