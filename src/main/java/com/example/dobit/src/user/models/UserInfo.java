@@ -15,9 +15,9 @@ public class UserInfo extends BaseEntity {
      * 유저 ID
      */
     @Id // PK를 의미하는 어노테이션
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = "userIdx", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int userIdx;
 
     /**
      * 이메일
@@ -37,11 +37,6 @@ public class UserInfo extends BaseEntity {
     @Column(name = "nickname", nullable = false, length = 30)
     private String nickname;
 
-    /**
-     * 전화번호
-     */
-    @Column(name = "phoneNumber", length = 30)
-    private String phoneNumber;
 
     /**
      * 상태
@@ -49,10 +44,9 @@ public class UserInfo extends BaseEntity {
     @Column(name = "status", nullable = false, length = 10)
     private String status = "ACTIVE";
 
-    public UserInfo(String email, String password, String nickname, String phoneNumber) {
+    public UserInfo(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.phoneNumber = phoneNumber;
     }
 }

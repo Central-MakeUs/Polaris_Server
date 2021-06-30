@@ -9,18 +9,11 @@ import lombok.Getter;
 public enum BaseResponseStatus {
     // 1000 : 요청 성공
     SUCCESS(true, 1000, "요청에 성공하였습니다."),
-    SUCCESS_READ_USERS(true, 1010, "회원 전체 정보 조회에 성공하였습니다."),
-    SUCCESS_READ_USER(true, 1011, "회원 정보 조회에 성공하였습니다."),
-    SUCCESS_POST_USER(true, 1012, "회원가입에 성공하였습니다."),
-    SUCCESS_LOGIN(true, 1013, "로그인에 성공하였습니다."),
-    SUCCESS_JWT(true, 1014, "JWT 검증에 성공하였습니다."),
-    SUCCESS_DELETE_USER(true, 1015, "회원 탈퇴에 성공하였습니다."),
-    SUCCESS_PATCH_USER(true, 1016, "회원정보 수정에 성공하였습니다."),
-    SUCCESS_READ_SEARCH_USERS(true, 1017, "회원 검색 조회에 성공하였습니다."),
+
 
     // 2000 : Request 오류
     REQUEST_ERROR(false, 2000, "입력값을 확인해주세요."),
-    EMPTY_USERID(false, 2001, "유저 아이디 값을 확인해주세요."),
+//    EMPTY_USERID(false, 2001, "유저 아이디 값을 확인해주세요."),
     EMPTY_JWT(false, 2010, "JWT를 입력해주세요."),
     INVALID_JWT(false, 2011, "유효하지 않은 JWT입니다."),
     EMPTY_EMAIL(false, 2020, "이메일을 입력해주세요."),
@@ -35,11 +28,16 @@ public enum BaseResponseStatus {
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
     NOT_FOUND_USER(false, 3010, "존재하지 않는 회원입니다."),
     DUPLICATED_USER(false, 3011, "이미 존재하는 회원입니다."),
-    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
-    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
-    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),
-    FAILED_TO_DELETE_USER(false, 3015, "회원 탈퇴에 실패하였습니다."),
-    FAILED_TO_PATCH_USER(false, 3016, "개인정보 수정에 실패하였습니다."),
+    FAILED_TO_FIND_BY_EMAIL_AND_STATUS(false, 3012, "email, status로 회원 정보 조회에 실패하였습니다."),
+    FAILED_TO_ENCRYPT_PASSWORD(false, 3013, "password 암호화에 실패하였습니다."),
+    FAILED_TO_SAVE_USER_INFO(false, 3014, "유저 정보 저장에 실패했습니다."),
+//    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
+//    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
+//    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),
+//    FAILED_TO_DELETE_USER(false, 3015, "회원 탈퇴에 실패하였습니다."),
+//    FAILED_TO_PATCH_USER(false, 3016, "개인정보 수정에 실패하였습니다."),
+
+
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
