@@ -14,21 +14,26 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+import static com.example.dobit.config.BaseResponseStatus.EMPTY_JWT;
+import static com.example.dobit.config.BaseResponseStatus.INVALID_JWT;
+
 @Service
 public class JwtService {
+
     /**
      * JWT 생성
-     * @param userId
+     * @param userIdx
      * @return String
      */
-    public String createJwt(int userId) {
+    public String createJwt(int userIdx) {
         Date now = new Date();
         return Jwts.builder()
-                .claim("userId", userId)
+                .claim("userIdx", userIdx)
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256, Secret.JWT_SECRET_KEY)
                 .compact();
     }
+
 
     /**
      * Header에서 X-ACCESS-TOKEN 으로 JWT 추출
@@ -40,17 +45,16 @@ public class JwtService {
     }
 
     /**
-     * JWT에서 userId 추출
+     * JWT에서 userIdx 추출
      * @return int
      * @throws BaseException
      */
-    public int getUserId() throws BaseException {
+    public int getUserIdx() throws BaseException {
         // 1. JWT 추출
         String accessToken = getJwt();
         if (accessToken == null || accessToken.length() == 0) {
-            throw new BaseException(BaseResponseStatus.EMPTY_JWT);
+            throw new BaseException(EMPTY_JWT);
         }
-
         // 2. JWT parsing
         Jws<Claims> claims;
         try {
@@ -58,10 +62,9 @@ public class JwtService {
                     .setSigningKey(Secret.JWT_SECRET_KEY)
                     .parseClaimsJws(accessToken);
         } catch (Exception ignored) {
-            throw new BaseException(BaseResponseStatus.INVALID_JWT);
+            throw new BaseException(INVALID_JWT);
         }
-
-        // 3. userId 추출
-        return claims.getBody().get("userId", Integer.class);
+        // 3. userIdx 추출
+        return claims.getBody().get("userIdx", Integer.class);
     }
 }

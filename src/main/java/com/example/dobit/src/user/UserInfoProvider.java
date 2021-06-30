@@ -1,17 +1,14 @@
 package com.example.dobit.src.user;
 
-import com.example.dobit.config.BaseResponseStatus;
 import com.example.dobit.src.user.models.*;
 import com.example.dobit.utils.AES128;
 import com.example.dobit.utils.JwtService;
 import com.example.dobit.config.secret.Secret;
 import com.example.dobit.config.BaseException;
-import com.example.dobit.src.user.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.example.dobit.config.BaseResponseStatus.*;
 
@@ -27,7 +24,7 @@ public class UserInfoProvider {
     }
 
     /**
-     * 회원 조회
+     * 이메일로 회원 조회
      * @param email
      * @return UserInfo
      * @throws BaseException
@@ -54,7 +51,7 @@ public class UserInfoProvider {
     }
 
     /**
-     * 로그인
+     * 로그인 API
      * @param postLoginReq
      * @return PostLoginRes
      * @throws BaseException
@@ -82,6 +79,28 @@ public class UserInfoProvider {
         // 4. PostLoginRes 변환하여 return
         int userIdx = userInfo.getUserIdx();
         return new PostLoginRes(userIdx, jwt);
+    }
+
+
+    /**
+     * Idx로 회원 조회
+     * @param userIdx
+     * @return UserInfo
+     * @throws BaseException
+     */
+    public UserInfo retrieveUserByUserIdx(Integer userIdx) throws BaseException {
+        UserInfo userInfo;
+        try {
+            userInfo = userInfoRepository.findById(userIdx).orElse(null);
+        } catch (Exception ignored) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+
+        if (userInfo == null || !userInfo.getStatus().equals("ACTIVE")) {
+            throw new BaseException(NOT_FOUND_USER);
+        }
+
+        return userInfo;
     }
 
 //    /**

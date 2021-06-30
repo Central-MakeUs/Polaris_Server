@@ -43,6 +43,7 @@ public class UserInfoController {
      */
     @PostMapping("/signup")
     public BaseResponse<PostSignUpRes> postSignUp(@RequestBody PostSignUpReq postSignUpReq) {
+        // 이메일 중복검사, 비밀번호 형식 몇자이상 댐누자 솜누자 포함
         if (postSignUpReq.getEmail() == null || postSignUpReq.getEmail().length() == 0) {
             return new BaseResponse<>(EMPTY_EMAIL);
         }
@@ -65,7 +66,6 @@ public class UserInfoController {
         }
 
 
-        // 2. Post UserInfo
         try {
             PostSignUpRes postSignUpRes = userInfoService.createUserInfo(postSignUpReq);
             return new BaseResponse<>(SUCCESS, postSignUpRes);
@@ -90,7 +90,6 @@ public class UserInfoController {
             return new BaseResponse<>(EMPTY_PASSWORD);
         }
 
-        // 2. Login
         try {
             PostLoginRes postLoginRes = userInfoProvider.login(postLoginReq);
             return new BaseResponse<>(SUCCESS, postLoginRes);
@@ -99,24 +98,24 @@ public class UserInfoController {
         }
     }
 
-//    /**
-//     * 자동로그인 API
-//     * [POST] /users/auto-login
-//     */
-//    @ResponseBody
-//    @PostMapping("/auto-login")
-//    public BaseResponse<Void> postAutoLogin() {
-//
-//        try {
-//            Integer userIdx = jwtService.getUserId();
-//            userInfoProvider.retrieveUserByUserIdx(userIdx);
-//            return new BaseResponse<>(SUCCESS);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//    }
-//
-//
+    /**
+     * 자동로그인 API
+     * [POST] /users/auto-login
+     */
+    @ResponseBody
+    @PostMapping("/auto-login")
+    public BaseResponse<Void> postAutoLogin() {
+
+        try {
+            Integer userIdx = jwtService.getUserIdx();
+            userInfoProvider.retrieveUserByUserIdx(userIdx);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
 
 
 //    /**
