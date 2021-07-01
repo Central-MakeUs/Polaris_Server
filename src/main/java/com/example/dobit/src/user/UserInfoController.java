@@ -121,11 +121,12 @@ public class UserInfoController {
     }
 
     /**
-     * 유저 탈퇴 API
+     * 회원 탈퇴 API
      * [PATCH] /users/:userIdx/status
+     * @PathVariable userIdx
      */
     @ResponseBody
-    @PatchMapping("/users/{userIdx}/status")
+    @PatchMapping("/{userIdx}/status")
     public BaseResponse<Void> patchUserStatus(@PathVariable Integer userIdx) throws BaseException {
 
 
