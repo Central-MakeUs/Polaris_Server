@@ -93,11 +93,11 @@ public class UserInfoProvider {
         try {
             userInfo = userInfoRepository.findById(userIdx).orElse(null);
         } catch (Exception ignored) {
-            throw new BaseException(DATABASE_ERROR);
+            throw new BaseException(FAILED_TO_FIND_BY_USERIDX);
         }
 
         if (userInfo == null || !userInfo.getStatus().equals("ACTIVE")) {
-            throw new BaseException(NOT_FOUND_USER);
+            throw new BaseException(INACTIVE_USER);
         }
 
         return userInfo;
