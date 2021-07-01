@@ -24,6 +24,8 @@ public enum BaseResponseStatus {
     EMPTY_NICKNAME(false, 2034, "닉네임을 입력해주세요."),
     INVALID_PASSWORD(false, 2035, "유효하지 않은 패스워드입니다. 최소 8자리면서 숫자, 문자, 특수문자 각각 1개 이상 포함하십시오."),
     EXIST_EMAIL(false, 2036, "존재하는 이메일입니다."),
+    INVALID_USERIDX(false, 2037, "유효하지 않은 userIdx입니다"),
+    INVALID_USER(false, 2037, "유효하지 않은 user입니다"),
 
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
@@ -34,6 +36,7 @@ public enum BaseResponseStatus {
     FAILED_TO_SAVE_USER_INFO(false, 3014, "유저 정보 저장에 실패했습니다."),
     FAILED_TO_DECRYPT_PASSWORD(false, 3015, "password 복호화에 실패하였습니다."),
     FAILED_TO_EXIST_BY_EMAIL_AND_STATUS(false, 3016, "email,status로 회원 존재 여부 조회에 실패하였습니다."),
+    FAILED_TO_SAVE_USERINFO(false, 3017, "UserInfo 저장에 실패했습니다."),
 //    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
 //    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
 //    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),

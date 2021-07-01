@@ -74,6 +74,24 @@ public class UserInfoService {
     }
 
 
+
+
+    /**
+     * 유저 탈퇴 API
+     * @throws BaseException
+     */
+    public void updateUserStatus(Integer jwtUserIdx) throws BaseException {
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+
+        userInfo.setStatus("INACTIVE");
+        try {
+            userInfo = userInfoRepository.save(userInfo);
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_SAVE_USERINFO);
+        }
+    }
+
 //    /**
 //     * 회원가입
 //     * @param postUserReq

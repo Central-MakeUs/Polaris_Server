@@ -120,6 +120,39 @@ public class UserInfoController {
         }
     }
 
+    /**
+     * 유저 탈퇴 API
+     * [PATCH] /users/:userIdx/status
+     */
+    @ResponseBody
+    @PatchMapping("/users/{userIdx}/status")
+    public BaseResponse<Void> patchUserStatus(@PathVariable Integer userIdx) throws BaseException {
+
+
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        if(userIdx != jwtUserIdx){
+            return new BaseResponse<>(INVALID_USERIDX);
+        }
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(userIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+
+        try {
+            userInfoService.updateUserStatus(userIdx);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 
 
