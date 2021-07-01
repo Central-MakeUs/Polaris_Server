@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface UserInfoRepository extends CrudRepository<UserInfo, Integer> {
     List<UserInfo> findByEmailAndStatus(String email, String status);
+    Boolean existsByEmailAndStatus(String email,String status);
 }

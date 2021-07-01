@@ -13,7 +13,6 @@ public enum BaseResponseStatus {
 
     // 2000 : Request 오류
     REQUEST_ERROR(false, 2000, "입력값을 확인해주세요."),
-//    EMPTY_USERID(false, 2001, "유저 아이디 값을 확인해주세요."),
     EMPTY_JWT(false, 2010, "JWT를 입력해주세요."),
     INVALID_JWT(false, 2011, "유효하지 않은 JWT입니다."),
     EMPTY_EMAIL(false, 2020, "이메일을 입력해주세요."),
@@ -22,7 +21,9 @@ public enum BaseResponseStatus {
     EMPTY_CONFIRM_PASSWORD(false, 2031, "비밀번호 확인을 입력해주세요."),
     WRONG_PASSWORD(false, 2032, "비밀번호를 다시 입력해주세요."),
     DO_NOT_MATCH_PASSWORD(false, 2033, "비밀번호와 비밀번호확인 값이 일치하지 않습니다."),
-    EMPTY_NICKNAME(false, 2040, "닉네임을 입력해주세요."),
+    EMPTY_NICKNAME(false, 2034, "닉네임을 입력해주세요."),
+    INVALID_PASSWORD(false, 2035, "유효하지 않은 패스워드입니다. 최소 8자리면서 숫자, 문자, 특수문자 각각 1개 이상 포함하십시오."),
+    EXIST_EMAIL(false, 2036, "존재하는 이메일입니다."),
 
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
@@ -32,6 +33,7 @@ public enum BaseResponseStatus {
     FAILED_TO_ENCRYPT_PASSWORD(false, 3013, "password 암호화에 실패하였습니다."),
     FAILED_TO_SAVE_USER_INFO(false, 3014, "유저 정보 저장에 실패했습니다."),
     FAILED_TO_DECRYPT_PASSWORD(false, 3015, "password 복호화에 실패하였습니다."),
+    FAILED_TO_EXIST_BY_EMAIL_AND_STATUS(false, 3016, "email,status로 회원 존재 여부 조회에 실패하였습니다."),
 //    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
 //    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
 //    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),

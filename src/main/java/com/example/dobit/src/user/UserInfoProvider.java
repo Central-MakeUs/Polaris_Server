@@ -103,6 +103,24 @@ public class UserInfoProvider {
         return userInfo;
     }
 
+    /**
+     * 존재하는 이메일인지 확인
+     * @param email
+     * @return existEmail
+     * @throws BaseException
+     */
+    public Boolean retrieveEmail(String email) throws BaseException {
+        Boolean existEmail;
+        try {
+            existEmail = userInfoRepository.existsByEmailAndStatus(email,"ACTIVE");
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_EXIST_BY_EMAIL_AND_STATUS);
+        }
+
+
+        return existEmail;
+    }
+
 //    /**
 //     * 전체 회원 조회
 //     * @return List<UserInfoRes>

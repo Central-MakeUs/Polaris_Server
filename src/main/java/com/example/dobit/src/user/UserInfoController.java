@@ -42,25 +42,30 @@ public class UserInfoController {
      * @return BaseResponse<PostUserRes>
      */
     @PostMapping("/signup")
-    public BaseResponse<PostSignUpRes> postSignUp(@RequestBody PostSignUpReq postSignUpReq) {
-        // 이메일 중복검사, 비밀번호 형식 몇자이상 댐누자 솜누자 포함
+    public BaseResponse<PostSignUpRes> postSignUp(@RequestBody PostSignUpReq postSignUpReq) throws BaseException {
+
         if (postSignUpReq.getEmail() == null || postSignUpReq.getEmail().length() == 0) {
             return new BaseResponse<>(EMPTY_EMAIL);
         }
         if (!isRegexEmail(postSignUpReq.getEmail())){
             return new BaseResponse<>(INVALID_EMAIL);
         }
+        boolean existEmail =  userInfoProvider.retrieveEmail(postSignUpReq.getEmail());
+        if(existEmail){
+            return new BaseResponse<>(EXIST_EMAIL);
+        }
         if (postSignUpReq.getPassword() == null || postSignUpReq.getPassword().length() == 0) {
             return new BaseResponse<>(EMPTY_PASSWORD);
         }
-
-//        if (parameters.getConfirmPassword() == null || parameters.getConfirmPassword().length() == 0) {
-//            return new BaseResponse<>(EMPTY_CONFIRM_PASSWORD);
-//        }
-//        if (!parameters.getPassword().equals(parameters.getConfirmPassword())) {
-//            return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
-//        }
-
+        if (!isRegexPassword(postSignUpReq.getPassword())) {
+            return new BaseResponse<>(INVALID_PASSWORD);
+        }
+        if (postSignUpReq.getConfirmPassword() == null || postSignUpReq.getConfirmPassword().length() == 0) {
+            return new BaseResponse<>(EMPTY_CONFIRM_PASSWORD);
+        }
+        if (!postSignUpReq.getPassword().equals(postSignUpReq.getConfirmPassword())) {
+            return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
+        }
         if (postSignUpReq.getNickname() == null || postSignUpReq.getNickname().length() == 0) {
             return new BaseResponse<>(EMPTY_NICKNAME);
         }

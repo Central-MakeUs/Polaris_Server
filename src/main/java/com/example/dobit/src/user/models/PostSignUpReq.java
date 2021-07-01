@@ -7,5 +7,6 @@ import lombok.*;
 public class PostSignUpReq {
     private String email;
     private String password;
+    private String confirmPassword;
     private String nickname;
 }
