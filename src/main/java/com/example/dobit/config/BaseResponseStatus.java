@@ -26,6 +26,8 @@ public enum BaseResponseStatus {
     EXIST_EMAIL(false, 2036, "존재하는 이메일입니다."),
     INVALID_USERIDX(false, 2037, "유효하지 않은 userIdx입니다."),
     INVALID_USER(false, 2038, "유효하지 않은 user입니다."),
+    INVALID_IDENTITYIDX(false, 2039, "유효하지 않은 정체성입니다."),
+    EMPTY_IDENTITYLIST(false, 2040, "정체성 리스트를 입력하세요."),
 
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
@@ -40,6 +42,9 @@ public enum BaseResponseStatus {
     FAILED_TO_FIND_BY_USERIDX(false, 3018, "userIdx로 UserInfo 조회에 실패했습니다."),
     INACTIVE_USER(false, 3019, "비활성화된 유저입니다."),
     FAILED_TO_FIND_BY_STATUS(false, 3020, "status로 목표(정체성) 조회에 실패했습니다."),
+    FAILED_TO_FIND_BY_IDENTITYIDX(false, 3021, "identityIdx로 목표(정체성) 조회에 실패했습니다."),
+    INACTIVE_IDENTITY(false, 3022, "비활성화된 정체성입니다."),
+    FAILED_TO_SAVE_USER_TO_IDENTITY(false, 3023, "유저 정체성 저장에 실패했습니다."),
 //    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
 //    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
 //    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),

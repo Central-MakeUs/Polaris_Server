@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.dobit.config.BaseResponseStatus.FAILED_TO_FIND_BY_STATUS;
+import static com.example.dobit.config.BaseResponseStatus.*;
 
 
 @Service
@@ -41,5 +41,26 @@ public class IdentityProvider {
 
         }
         return getOriginIdentityResList;
+    }
+
+    /**
+     * Idx로 정체성 조회
+     * @param identityIdx
+     * @return Identity
+     * @throws BaseException
+     */
+    public Identity retrieveIdentityByIdentityIdx(Integer identityIdx) throws BaseException {
+        Identity identity;
+        try {
+            identity = identityRepository.findById(identityIdx).orElse(null);
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_FIND_BY_IDENTITYIDX);
+        }
+
+        if (identity == null || !identity.getStatus().equals("ACTIVE")) {
+            throw new BaseException(INACTIVE_IDENTITY);
+        }
+
+        return identity;
     }
 }
