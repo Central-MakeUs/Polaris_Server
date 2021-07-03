@@ -1,12 +1,15 @@
 package com.example.dobit.src.identity.models;
 
 import com.example.dobit.config.BaseEntity;
+import com.example.dobit.src.userToIdentity.models.UserToIdentity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
 @EqualsAndHashCode(callSuper = false)
@@ -23,7 +26,7 @@ public class Identity extends BaseEntity {
     private int identityIdx;
 
     /**
-     * 이메일
+     * 정체성명
      */
     @Column(name = "identityName", nullable = false, length = 45)
     private String identityName;
@@ -34,6 +37,9 @@ public class Identity extends BaseEntity {
      */
     @Column(name = "status", nullable = false, length = 10)
     private String status = "ACTIVE";
+
+    @OneToMany(mappedBy = "identity", cascade = CascadeType.ALL)
+    private List<UserToIdentity> userToIdentitys = new ArrayList<>();
 
     public Identity(String identityName) {
         this.identityName = identityName;
