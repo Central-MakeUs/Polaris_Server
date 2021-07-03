@@ -9,8 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
@@ -28,19 +26,18 @@ public class UserToIdentity extends BaseEntity {
     private int idx;
 
     /**
-     * 유저 idx
+     * 유저
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdx", nullable = false)
     private UserInfo userInfo;
 
     /**
-     * 정체성 idx
+     * 정체성
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "identityIdx")
     private Identity identity;
-
 
     /**
      * 정체성명
