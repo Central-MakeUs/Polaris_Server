@@ -9,6 +9,7 @@ import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.PostSignUpRes;
 import com.example.dobit.src.user.models.UserInfo;
+import com.example.dobit.src.userToIdentity.models.PostDirectIdentityReq;
 import com.example.dobit.src.userToIdentity.models.PostIdentityReq;
 import com.example.dobit.src.userToIdentity.models.UserToIdentity;
 import com.example.dobit.utils.AES128;
@@ -29,8 +30,8 @@ public class UserToIdentityService {
 
     /**
      * 목표 추가하기 API
-     *
-     * @return List<PostIdentityReq>
+     * @param userInfo, postIdentityReq
+     * @return void
      * @throws BaseException
      */
     public void  createIdentity(UserInfo userInfo ,PostIdentityReq postIdentityReq) throws BaseException {
@@ -47,7 +48,23 @@ public class UserToIdentityService {
             } catch (Exception exception) {
                 throw new BaseException(FAILED_TO_SAVE_USER_TO_IDENTITY);
             }
+        }
+    }
 
+    /**
+     * 목표 직접 추가하기 API
+     * @param userInfo, postDirectIdentityReq
+     * @return void
+     * @throws BaseException
+     */
+    public void  createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
+        String identityName = postDirectIdentityReq.getIdentityName();
+
+        UserToIdentity userToIdentity = new UserToIdentity(userInfo, null, identityName);
+        try {
+            userToIdentityRepository.save(userToIdentity);
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_SAVE_USER_TO_IDENTITY);
 
         }
     }

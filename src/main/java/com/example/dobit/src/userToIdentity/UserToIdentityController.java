@@ -6,6 +6,7 @@ import com.example.dobit.src.identity.IdentityProvider;
 import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
+import com.example.dobit.src.userToIdentity.models.PostDirectIdentityReq;
 import com.example.dobit.src.userToIdentity.models.PostIdentityReq;
 import com.example.dobit.utils.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,14 @@ public class UserToIdentityController {
     private final JwtService jwtService;
     private final UserInfoProvider userInfoProvider;
     private final IdentityProvider identityProvider;
+    private final UserToIdentityProvider userToIdentityProvider;
     private final UserToIdentityService userToIdentityService;
 
     /**
      * 목표 추가하기 API
      * [POST] /identity
      * @RequestBody postIdentityReq
-     * @return BaseResponse<PostIdentityRes>
+     * @return BaseResponse<Void>
      */
     @ResponseBody
     @PostMapping("/identity")
@@ -63,6 +65,46 @@ public class UserToIdentityController {
         }
         try {
             userToIdentityService.createIdentity(userInfo,postIdentityReq);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+    /**
+     * 목표 직접 추가하기 API
+     * [POST] /identity
+     * @RequestBody postDirectIdentityReq
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PostMapping("/direct-identity")
+    public BaseResponse<Void> postDirectIdentity(@RequestBody PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+
+        if(postDirectIdentityReq.getIdentityName() == null || postDirectIdentityReq.getIdentityName().length() == 0){
+            return new BaseResponse<>(EMPTY_IDENTITY_NAME);
+        }
+
+        if(postDirectIdentityReq.getIdentityName().length() >= 20){
+            return new BaseResponse<>(INVALID_IDENTITY_NAME);
+        }
+
+
+        try {
+            userToIdentityService.createDirectIdentity(userInfo,postDirectIdentityReq);
             return new BaseResponse<>(SUCCESS);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
