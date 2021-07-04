@@ -6,6 +6,7 @@ import com.example.dobit.src.identity.IdentityProvider;
 import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
+import com.example.dobit.src.userToIdentity.models.GetIdentityRes;
 import com.example.dobit.src.userToIdentity.models.PostDirectIdentityReq;
 import com.example.dobit.src.userToIdentity.models.PostIdentityReq;
 import com.example.dobit.utils.JwtService;
@@ -112,6 +113,36 @@ public class UserToIdentityController {
 
     }
 
+
+
+    /**
+     * 목표 조회하기 API
+     * [POST] /identity
+     * @return BaseResponse<GetIdentityRes>
+     */
+    @ResponseBody
+    @GetMapping("/identity")
+    public BaseResponse<List<GetIdentityRes>> getIdentity() throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        try {
+            List<GetIdentityRes> getIdentityResList = userToIdentityProvider.retrieveIdentity(userInfo);
+            return new BaseResponse<>(SUCCESS,getIdentityResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
 
 
 }
