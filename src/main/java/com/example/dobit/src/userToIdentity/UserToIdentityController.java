@@ -29,7 +29,7 @@ public class UserToIdentityController {
     private final UserToIdentityService userToIdentityService;
 
     /**
-     * 목표 추가하기 API
+     * 정체성 추가하기 API
      * [POST] /identity
      * @RequestBody postIdentityReq
      * @return BaseResponse<Void>
@@ -74,8 +74,8 @@ public class UserToIdentityController {
     }
 
     /**
-     * 목표 직접 추가하기 API
-     * [POST] /identity
+     * 정체성 직접 추가하기 API
+     * [POST] /direct-identity
      * @RequestBody postDirectIdentityReq
      * @return BaseResponse<Void>
      */
@@ -116,7 +116,7 @@ public class UserToIdentityController {
 
 
     /**
-     * 목표 조회하기 API
+     * 정체성 조회하기 API
      * [POST] /identity
      * @return BaseResponse<GetIdentityRes>
      */

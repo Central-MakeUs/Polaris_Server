@@ -29,7 +29,7 @@ public class UserToIdentityService {
     private final IdentityProvider identityProvider;
 
     /**
-     * 목표 추가하기 API
+     * 정체성 추가하기 API
      * @param userInfo, postIdentityReq
      * @return void
      * @throws BaseException
@@ -52,7 +52,7 @@ public class UserToIdentityService {
     }
 
     /**
-     * 목표 직접 추가하기 API
+     * 정체성 직접 추가하기 API
      * @param userInfo, postDirectIdentityReq
      * @return void
      * @throws BaseException

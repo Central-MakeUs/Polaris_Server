@@ -19,7 +19,7 @@ public class UserToIdentityProvider {
 
 
     /**
-     * 목표 조회하기 API
+     * 정체성 조회하기 API
      * @param userInfo
      * @return List<GetIdentityRes>
      * @throws BaseException

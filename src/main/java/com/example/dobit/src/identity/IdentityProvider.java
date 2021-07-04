@@ -18,7 +18,7 @@ public class IdentityProvider {
     private final IdentityRepository identityRepository;
 
     /**
-     * 기존 목표 조회하기 API
+     * 기존 정체성 조회하기 API
      *
      * @return List<GetOriginIdentityRes>
      * @throws BaseException

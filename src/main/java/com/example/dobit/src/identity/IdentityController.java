@@ -22,7 +22,7 @@ public class IdentityController {
     private final IdentityProvider identityProvider;
 
     /**
-     * 기존 목표 조회하기 API
+     * 기존 정체성 조회하기 API
      * [POST] /origin-identity
      * @return BaseResponse<GetOriginIdentityRes>
      */
