@@ -11,16 +11,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = false)
-@Data // from lombok
-@Entity // 필수, Class 를 Database Table화 해주는 것이다
-@Table(name = "Identity") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
+@Data
+@Entity
+@Table(name = "Identity")
 public class Identity extends BaseEntity {
     /**
      * 정체성 idx
      */
-    @Id // PK를 의미하는 어노테이션
+    @Id
     @Column(name = "identityIdx", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int identityIdx;
