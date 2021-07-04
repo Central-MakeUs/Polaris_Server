@@ -21,9 +21,9 @@ public class UserToIdentity extends BaseEntity {
      * idx
      */
     @Id // PK를 의미하는 어노테이션
-    @Column(name = "userToIdentityIdx", nullable = false, updatable = false)
+    @Column(name = "utiIdx", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userToIdentityIdx;
+    private int utiIdx;
 
     /**
      * 유저

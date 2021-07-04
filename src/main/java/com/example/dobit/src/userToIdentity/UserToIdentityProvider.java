@@ -34,7 +34,7 @@ public class UserToIdentityProvider {
 
         List<GetIdentityRes> getIdentityResList = new ArrayList<>();
         for(int i=0;i<userToIdentityList.size();i++){
-            Integer userToIdentityIdx = userToIdentityList.get(i).getUserToIdentityIdx();
+            Integer userToIdentityIdx = userToIdentityList.get(i).getUtiIdx();
             String identityName = userToIdentityList.get(i).getIdentityName();
             String doHabit = null;
             String doNotHabit = null;
