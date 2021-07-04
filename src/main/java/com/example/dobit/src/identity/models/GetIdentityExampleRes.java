@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class GetOriginIdentityRes {
+public class GetIdentityExampleRes {
     private final int identityIdx;
     private final String identityName;
 }

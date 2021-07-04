@@ -2,7 +2,7 @@ package com.example.dobit.src.identity;
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.src.identity.models.Identity;
-import com.example.dobit.src.identity.models.GetOriginIdentityRes;
+import com.example.dobit.src.identity.models.GetIdentityExampleRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,12 @@ public class IdentityProvider {
     private final IdentityRepository identityRepository;
 
     /**
-     * 기존 정체성 조회하기 API
+     * 정체성 예시 조회하기 API
      *
-     * @return List<GetOriginIdentityRes>
+     * @return List<GetIdentityExampleRes>
      * @throws BaseException
      */
-    public List<GetOriginIdentityRes> retrieveOriginIdentity() throws BaseException {
+    public List<GetIdentityExampleRes> retrieveOriginIdentity() throws BaseException {
         List<Identity> identityList;
         try {
             identityList = identityRepository.findByStatus("ACTIVE");
@@ -31,16 +31,16 @@ public class IdentityProvider {
             throw new BaseException(FAILED_TO_FIND_BY_STATUS);
         }
 
-        List<GetOriginIdentityRes> getOriginIdentityResList = new ArrayList<>();
+        List<GetIdentityExampleRes> getIdentityExampleResList = new ArrayList<>();
         for (int i = 0; i < identityList.size(); i++) {
             Integer identityIdx = identityList.get(i).getIdentityIdx();
             String identityName = identityList.get(i).getIdentityName();
 
-            GetOriginIdentityRes getOriginIdentityRes = new GetOriginIdentityRes(identityIdx, identityName);
-            getOriginIdentityResList.add(getOriginIdentityRes);
+            GetIdentityExampleRes getIdentityExampleRes = new GetIdentityExampleRes(identityIdx, identityName);
+            getIdentityExampleResList.add(getIdentityExampleRes);
 
         }
-        return getOriginIdentityResList;
+        return getIdentityExampleResList;
     }
 
     /**
