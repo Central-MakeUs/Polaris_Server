@@ -89,9 +89,11 @@ public class UserInfoController {
     public BaseResponse<PostLoginRes> login(@RequestBody PostLoginReq postLoginReq) {
         if (postLoginReq.getEmail() == null || postLoginReq.getEmail().length() == 0) {
             return new BaseResponse<>(EMPTY_EMAIL);
-        } else if (!isRegexEmail(postLoginReq.getEmail())) {
+        }
+        if (!isRegexEmail(postLoginReq.getEmail())) {
             return new BaseResponse<>(INVALID_EMAIL);
-        } else if (postLoginReq.getPassword() == null || postLoginReq.getPassword().length() == 0) {
+        }
+        if (postLoginReq.getPassword() == null || postLoginReq.getPassword().length() == 0) {
             return new BaseResponse<>(EMPTY_PASSWORD);
         }
 
