@@ -5,8 +5,10 @@ import com.example.dobit.config.BaseResponseStatus;
 import com.example.dobit.src.user.models.*;
 import com.example.dobit.utils.JwtService;
 import com.example.dobit.config.BaseException;
+import com.example.dobit.utils.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 
 import static com.example.dobit.config.BaseResponseStatus.*;
 import static com.example.dobit.utils.ValidationRegex.*;
@@ -18,6 +20,7 @@ public class UserInfoController {
     private final UserInfoProvider userInfoProvider;
     private final UserInfoService userInfoService;
     private final JwtService jwtService;
+    private final MailService mailService;
 
 
     /**
@@ -153,6 +156,39 @@ public class UserInfoController {
     }
 
 
+
+    /**
+     * 인증번호 발송하기 API
+     * [POST] /mail/auth
+     * @RequestBody postMailAuthReq
+     * @return BaseResponse<Void>
+     */
+
+    @PostMapping("/mail/auth")
+    public BaseResponse<PostMailAuthRes> postMailAuth(@RequestBody PostMailAuthReq postMailAuthReq) throws BaseException {
+        String email = postMailAuthReq.getEmail();
+
+        if (email == null || email.length() == 0) {
+            return new BaseResponse<>(EMPTY_EMAIL);
+        }
+        if (!isRegexEmail(email)) {
+            return new BaseResponse<>(INVALID_EMAIL);
+        }
+        Boolean existEmail = userInfoProvider.retrieveEmail(email);
+        if(!existEmail){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        try {
+            PostMailAuthRes postMailAuthRes = mailService.sendMailAuth(email);
+            return new BaseResponse<>(SUCCESS,postMailAuthRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+
+
+    }
 
 //    /**
 //     * 회원 전체 조회 API

@@ -1,7 +1,7 @@
-package com.example.dobit.src.auth;
+package com.example.dobit.utils;
 
 import com.example.dobit.config.BaseException;
-import com.example.dobit.src.auth.models.PostMailAuthRes;
+import com.example.dobit.src.user.models.PostMailAuthRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
-import static com.example.dobit.config.BaseResponseStatus.FAILED_TO_SAVE_USERINFO;
 import static com.example.dobit.config.BaseResponseStatus.FAILED_TO_SEND_MAIL;
 
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class MailService {
     private final JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "dobit0628@gmail.com";
 
@@ -39,7 +38,7 @@ public class AuthService {
 
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(email);
-            message.setFrom(AuthService.FROM_ADDRESS);
+            message.setFrom(MailService.FROM_ADDRESS);
             message.setSubject("인증번호 메일 발송");
             message.setText("인증번호: "+ key);
 

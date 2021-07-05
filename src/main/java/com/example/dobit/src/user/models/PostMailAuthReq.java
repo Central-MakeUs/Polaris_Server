@@ -1,4 +1,4 @@
-package com.example.dobit.src.auth.models;
+package com.example.dobit.src.user.models;
 
 import lombok.AccessLevel;
 import lombok.Getter;
