@@ -58,9 +58,11 @@ public enum BaseResponseStatus {
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
-    DATABASE_ERROR(false, 4001, "데이터베이스 연결에 실패하였습니다.");
+    DATABASE_ERROR(false, 4001, "데이터베이스 연결에 실패하였습니다."),
 
-    // 5000 : 필요시 만들어서 쓰세요
+    // 5000 : 기타
+    FAILED_TO_SEND_MAIL(false, 5000, "메일 전송에 실패했습니다.");
+
     // 6000 : 필요시 만들어서 쓰세요
 
     private final boolean isSuccess;
