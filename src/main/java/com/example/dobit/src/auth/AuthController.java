@@ -3,6 +3,7 @@ package com.example.dobit.src.auth;
 import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
 import com.example.dobit.src.auth.models.PostMailAuthReq;
+import com.example.dobit.src.auth.models.PostMailAuthRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class AuthController {
      */
 
     @PostMapping("/mail/auth")
-    public BaseResponse<Void> postMailAuth(HttpServletRequest request, @RequestBody PostMailAuthReq postMailAuthReq) throws BaseException {
+    public BaseResponse<PostMailAuthRes> postMailAuth(HttpServletRequest request, @RequestBody PostMailAuthReq postMailAuthReq) throws BaseException {
         String email = postMailAuthReq.getEmail();
 
         if (email == null || email.length() == 0) {
@@ -39,8 +40,8 @@ public class AuthController {
 
 
         try {
-            authService.sendMailAuth(email);
-            return new BaseResponse<>(SUCCESS);
+            PostMailAuthRes postMailAuthRes =authService.sendMailAuth(email);
+            return new BaseResponse<>(SUCCESS,postMailAuthRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
