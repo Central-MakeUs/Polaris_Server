@@ -5,31 +5,26 @@ import com.example.dobit.config.BaseResponseStatus;
 import com.example.dobit.src.user.models.*;
 import com.example.dobit.utils.JwtService;
 import com.example.dobit.config.BaseException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.dobit.config.BaseResponseStatus.*;
 import static com.example.dobit.utils.ValidationRegex.*;
 
 @RestController
-@RequestMapping("/users")
+@RequiredArgsConstructor
+@RequestMapping
 public class UserInfoController {
     private final UserInfoProvider userInfoProvider;
     private final UserInfoService userInfoService;
     private final JwtService jwtService;
 
-    @Autowired
-    public UserInfoController(UserInfoProvider userInfoProvider, UserInfoService userInfoService, JwtService jwtService) {
-        this.userInfoProvider = userInfoProvider;
-        this.userInfoService = userInfoService;
-        this.jwtService = jwtService;
-    }
 
     /**
      * test
      */
     @ResponseBody
-    @GetMapping("/test")
+    @GetMapping("/users/test")
     public BaseResponse<Void> getTest() {
             System.out.println("test");
             return new BaseResponse<>(BaseResponseStatus.SUCCESS);
@@ -41,7 +36,7 @@ public class UserInfoController {
      * @RequestBody postSignUpReq
      * @return BaseResponse<PostUserRes>
      */
-    @PostMapping("/signup")
+    @PostMapping("/users/signup")
     public BaseResponse<PostSignUpRes> postSignUp(@RequestBody PostSignUpReq postSignUpReq) throws BaseException {
 
         if (postSignUpReq.getEmail() == null || postSignUpReq.getEmail().length() == 0) {
@@ -85,7 +80,7 @@ public class UserInfoController {
      * @RequestBody PostLoginReq
      * @return BaseResponse<PostLoginRes>
      */
-    @PostMapping("/login")
+    @PostMapping("/users/login")
     public BaseResponse<PostLoginRes> login(@RequestBody PostLoginReq postLoginReq) {
         if (postLoginReq.getEmail() == null || postLoginReq.getEmail().length() == 0) {
             return new BaseResponse<>(EMPTY_EMAIL);
@@ -110,7 +105,7 @@ public class UserInfoController {
      * [POST] /users/auto-login
      */
     @ResponseBody
-    @PostMapping("/auto-login")
+    @PostMapping("/users/auto-login")
     public BaseResponse<Void> postAutoLogin() {
 
         try {
@@ -128,7 +123,7 @@ public class UserInfoController {
      * @PathVariable userIdx
      */
     @ResponseBody
-    @PatchMapping("/{userIdx}/status")
+    @PatchMapping("/users/{userIdx}/status")
     public BaseResponse<Void> patchUserStatus(@PathVariable Integer userIdx) throws BaseException {
 
 
