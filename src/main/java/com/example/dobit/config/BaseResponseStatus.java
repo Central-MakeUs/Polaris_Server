@@ -30,6 +30,7 @@ public enum BaseResponseStatus {
     EMPTY_IDENTITYLIST(false, 2040, "정체성 리스트를 입력하세요."),
     EMPTY_IDENTITY_NAME(false, 2041, "정체성을 입력하세요."),
     INVALID_IDENTITY_NAME(false, 2042, "정체성은 20자이내로 입력하세요."),
+    EMPTY_USERIDX(false, 2043, "userIdx를 입력하세요."),
 
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),

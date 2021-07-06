@@ -229,6 +229,41 @@ public class UserInfoController {
     }
 
 
+    /**
+     * 회원정보 조회 API
+     * [GET] /users/:userIdx
+     * @PathVariable userIdx
+     * @return BaseResponse<GetUserRes>
+     */
+    @ResponseBody
+    @GetMapping("/users/{userIdx}")
+    public BaseResponse<GetUserRes> getUser(@PathVariable Integer userIdx) throws BaseException {
+
+        if (userIdx == null || userIdx <= 0) {
+            return new BaseResponse<>(EMPTY_USERIDX);
+        }
+
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        if(userIdx != jwtUserIdx){
+            return new BaseResponse<>(INVALID_USERIDX);
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(userIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        try {
+            GetUserRes getUserRes = userInfoProvider.retrieveUserInfo(userIdx);
+            return new BaseResponse<>(SUCCESS, getUserRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 //    /**
 //     * 회원 전체 조회 API

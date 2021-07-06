@@ -121,6 +121,21 @@ public class UserInfoProvider {
         return existEmail;
     }
 
+    /**
+     * 회원정보 조회 API
+     * @param userIdx
+     * @return GetUserRes
+     * @throws BaseException
+     */
+    public GetUserRes retrieveUserInfo(int userIdx) throws BaseException {
+
+        UserInfo userInfo = retrieveUserByUserIdx(userIdx);
+
+        Integer id = userInfo.getUserIdx();
+        String email = userInfo.getEmail();
+        String nickname = userInfo.getNickname();
+        return new GetUserRes(id, email, nickname);
+    }
 
 
 //    /**
