@@ -186,9 +186,51 @@ public class UserInfoController {
             return new BaseResponse<>(exception.getStatus());
         }
 
-
-
     }
+
+
+
+    /**
+     * 비밀번호 재설정하기 API
+     * [PATCH] /password
+     * @RequestBody patchPasswordReq
+     * @return BaseResponse<Void>
+     */
+
+    @PatchMapping("/mail/auth")
+    public BaseResponse<Void> patchPassword(@RequestBody PatchPasswordReq patchPasswordReq) throws BaseException {
+        if (patchPasswordReq.getEmail() == null || patchPasswordReq.getEmail().length() == 0) {
+            return new BaseResponse<>(EMPTY_EMAIL);
+        }
+        if (!isRegexEmail(patchPasswordReq.getEmail())){
+            return new BaseResponse<>(INVALID_EMAIL);
+        }
+        Boolean existEmail = userInfoProvider.retrieveEmail(patchPasswordReq.getEmail());
+        if(!existEmail){
+            return new BaseResponse<>(INVALID_USER);
+        }
+        if (patchPasswordReq.getPassword() == null || patchPasswordReq.getPassword().length() == 0) {
+            return new BaseResponse<>(EMPTY_PASSWORD);
+        }
+        if (!isRegexPassword(patchPasswordReq.getPassword())) {
+            return new BaseResponse<>(INVALID_PASSWORD);
+        }
+        if (patchPasswordReq.getConfirmPassword() == null || patchPasswordReq.getConfirmPassword().length() == 0) {
+            return new BaseResponse<>(EMPTY_CONFIRM_PASSWORD);
+        }
+        if (!patchPasswordReq.getPassword().equals(patchPasswordReq.getConfirmPassword())) {
+            return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
+        }
+
+        try {
+            userInfoService.updatePassword(patchPasswordReq);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
 
 //    /**
 //     * 회원 전체 조회 API

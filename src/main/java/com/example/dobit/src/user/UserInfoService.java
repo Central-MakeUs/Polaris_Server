@@ -78,6 +78,7 @@ public class UserInfoService {
 
     /**
      * 유저 탈퇴 API
+     * @param jwtUserIdx
      * @throws BaseException
      */
     public void updateUserStatus(Integer jwtUserIdx) throws BaseException {
@@ -87,6 +88,27 @@ public class UserInfoService {
         userInfo.setStatus("INACTIVE");
         try {
             userInfo = userInfoRepository.save(userInfo);
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_SAVE_USERINFO);
+        }
+    }
+
+    /**
+     * 비밀번호 재설정하기 API
+     * @param patchPasswordReq
+     * @throws BaseException
+     **/
+    public void updatePassword(PatchPasswordReq patchPasswordReq) throws BaseException {
+        String password;
+        try {
+            password = new AES128(Secret.USER_INFO_PASSWORD_KEY).encrypt(patchPasswordReq.getPassword());
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_ENCRYPT_PASSWORD);
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserInfoByEmail(patchPasswordReq.getEmail());
+        userInfo.setPassword(password);
+        try {
+            userInfoRepository.save(userInfo);
         } catch (Exception ignored) {
             throw new BaseException(FAILED_TO_SAVE_USERINFO);
         }
