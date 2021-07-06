@@ -196,8 +196,7 @@ public class UserInfoController {
      * @RequestBody patchPasswordReq
      * @return BaseResponse<Void>
      */
-
-    @PatchMapping("/mail/auth")
+    @PatchMapping("/password")
     public BaseResponse<Void> patchPassword(@RequestBody PatchPasswordReq patchPasswordReq) throws BaseException {
         if (patchPasswordReq.getEmail() == null || patchPasswordReq.getEmail().length() == 0) {
             return new BaseResponse<>(EMPTY_EMAIL);
@@ -221,7 +220,6 @@ public class UserInfoController {
         if (!patchPasswordReq.getPassword().equals(patchPasswordReq.getConfirmPassword())) {
             return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
         }
-
         try {
             userInfoService.updatePassword(patchPasswordReq);
             return new BaseResponse<>(SUCCESS);
