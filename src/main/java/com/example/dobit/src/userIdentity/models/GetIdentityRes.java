@@ -1,4 +1,4 @@
-package com.example.dobit.src.userToIdentity.models;
+package com.example.dobit.src.userIdentity.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetIdentityRes {
-    private final Integer userToIdentityIdx;
-    private final String identityName;
+    private final Integer userIdentityIdx;
+    private final String userIdentityName;
     private final String doHabit;
     private final String doNotHabit;
 }

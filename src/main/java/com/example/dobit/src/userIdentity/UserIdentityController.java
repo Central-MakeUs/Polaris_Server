@@ -1,4 +1,5 @@
-package com.example.dobit.src.userToIdentity;
+package com.example.dobit.src.userIdentity;
+
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
@@ -6,9 +7,9 @@ import com.example.dobit.src.identity.IdentityProvider;
 import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
-import com.example.dobit.src.userToIdentity.models.GetIdentityRes;
-import com.example.dobit.src.userToIdentity.models.PostDirectIdentityReq;
-import com.example.dobit.src.userToIdentity.models.PostIdentityReq;
+import com.example.dobit.src.userIdentity.models.GetIdentityRes;
+import com.example.dobit.src.userIdentity.models.PostDirectIdentityReq;
+import com.example.dobit.src.userIdentity.models.PostIdentityReq;
 import com.example.dobit.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +18,16 @@ import java.util.List;
 
 import static com.example.dobit.config.BaseResponseStatus.*;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
-public class UserToIdentityController {
-    private final JwtService jwtService;
+public class UserIdentityController {
+    private final UserIdentityProvider userIdentityProvider;
+    private final UserIdentityService userIdentityService;
     private final UserInfoProvider userInfoProvider;
     private final IdentityProvider identityProvider;
-    private final UserToIdentityProvider userToIdentityProvider;
-    private final UserToIdentityService userToIdentityService;
+    private final JwtService jwtService;
+
 
     /**
      * 정체성 추가하기 API
@@ -65,13 +66,15 @@ public class UserToIdentityController {
 
         }
         try {
-            userToIdentityService.createIdentity(userInfo,postIdentityReq);
+            userIdentityService.createIdentity(userInfo,postIdentityReq);
             return new BaseResponse<>(SUCCESS);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
 
     }
+
+
 
     /**
      * 정체성 직접 추가하기 API
@@ -99,21 +102,19 @@ public class UserToIdentityController {
             return new BaseResponse<>(EMPTY_IDENTITY_NAME);
         }
 
-        if(postDirectIdentityReq.getIdentityName().length() >= 20){
+        if(postDirectIdentityReq.getIdentityName().length() >= 45){
             return new BaseResponse<>(INVALID_IDENTITY_NAME);
         }
 
 
         try {
-            userToIdentityService.createDirectIdentity(userInfo,postDirectIdentityReq);
+            userIdentityService.createDirectIdentity(userInfo,postDirectIdentityReq);
             return new BaseResponse<>(SUCCESS);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
 
     }
-
-
 
     /**
      * 정체성 조회하기 API
@@ -136,13 +137,12 @@ public class UserToIdentityController {
         }
 
         try {
-            List<GetIdentityRes> getIdentityResList = userToIdentityProvider.retrieveIdentity(userInfo);
+            List<GetIdentityRes> getIdentityResList = userIdentityProvider.retrieveIdentity(userInfo);
             return new BaseResponse<>(SUCCESS,getIdentityResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
 
     }
-
 
 }

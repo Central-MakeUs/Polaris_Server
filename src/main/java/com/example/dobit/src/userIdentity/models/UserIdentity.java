@@ -1,7 +1,7 @@
-package com.example.dobit.src.userToIdentity.models;
+package com.example.dobit.src.userIdentity.models;
+
 
 import com.example.dobit.config.BaseEntity;
-import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.models.UserInfo;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -10,20 +10,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-@Table(name = "UserToIdentity")
-public class UserToIdentity extends BaseEntity {
+@Table(name = "UserIdentity")
+public class UserIdentity extends BaseEntity {
     /**
-     * idx
+     * 유저 정체성 idx
      */
     @Id
-    @Column(name = "utiIdx", nullable = false, updatable = false)
+    @Column(name = "userIdentityIdx", nullable = false,updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int utiIdx;
+    private int userIdentityIdx;
 
     /**
      * 유저
@@ -33,18 +32,10 @@ public class UserToIdentity extends BaseEntity {
     private UserInfo userInfo;
 
     /**
-     * 정체성
+     * 유저 정체성명
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "identityIdx")
-    private Identity identity;
-
-    /**
-     * 정체성명
-     */
-    @Column(name = "identityName", nullable = false, length = 45)
-    private String identityName;
-
+    @Column(name = "userIdentityName",nullable = false,length = 45)
+    private String userIdentityName;
 
     /**
      * 상태
@@ -53,9 +44,8 @@ public class UserToIdentity extends BaseEntity {
     private String status = "ACTIVE";
 
 
-    public UserToIdentity(UserInfo userInfo, Identity identity, String identityName) {
+    public UserIdentity(UserInfo userInfo,String userIdentityName){
         this.userInfo = userInfo;
-        this.identity = identity;
-        this.identityName = identityName;
+        this.userIdentityName = userIdentityName;
     }
 }

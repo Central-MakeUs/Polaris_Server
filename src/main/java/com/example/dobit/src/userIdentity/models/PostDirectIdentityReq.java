@@ -1,9 +1,8 @@
-package com.example.dobit.src.userToIdentity.models;
+package com.example.dobit.src.userIdentity.models;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)

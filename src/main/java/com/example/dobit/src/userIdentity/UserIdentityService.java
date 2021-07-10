@@ -1,12 +1,12 @@
-package com.example.dobit.src.userToIdentity;
+package com.example.dobit.src.userIdentity;
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.src.identity.IdentityProvider;
 import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.models.UserInfo;
-import com.example.dobit.src.userToIdentity.models.PostDirectIdentityReq;
-import com.example.dobit.src.userToIdentity.models.PostIdentityReq;
-import com.example.dobit.src.userToIdentity.models.UserToIdentity;
+import com.example.dobit.src.userIdentity.models.PostDirectIdentityReq;
+import com.example.dobit.src.userIdentity.models.PostIdentityReq;
+import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,11 @@ import java.util.List;
 
 import static com.example.dobit.config.BaseResponseStatus.*;
 
-
 @Service
 @RequiredArgsConstructor
-public class UserToIdentityService {
-    private final UserToIdentityRepository userToIdentityRepository;
+public class UserIdentityService {
     private final IdentityProvider identityProvider;
+    private final UserIdentityRepository userIdentityRepository;
 
     /**
      * 정체성 추가하기 API
@@ -27,7 +26,7 @@ public class UserToIdentityService {
      * @return void
      * @throws BaseException
      */
-    public void  createIdentity(UserInfo userInfo ,PostIdentityReq postIdentityReq) throws BaseException {
+    public void  createIdentity(UserInfo userInfo , PostIdentityReq postIdentityReq) throws BaseException {
         List<Integer> identityList = postIdentityReq.getIdentityList();
 
         for (int i = 0; i < identityList.size(); i++) {
@@ -35,16 +34,16 @@ public class UserToIdentityService {
             Identity identity = identityProvider.retrieveIdentityByIdentityIdx(identityIdx);
             String identityName = identity.getIdentityName();
 
-            UserToIdentity userToIdentity = new UserToIdentity(userInfo, identity, identityName);
+            UserIdentity userIdentity = new UserIdentity(userInfo, identityName);
             try {
-                userToIdentityRepository.save(userToIdentity);
+                userIdentityRepository.save(userIdentity);
             } catch (Exception exception) {
-                throw new BaseException(FAILED_TO_SAVE_USER_TO_IDENTITY);
+                throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
             }
         }
     }
 
-    /**
+        /**
      * 정체성 직접 추가하기 API
      * @param userInfo, postDirectIdentityReq
      * @return void
@@ -53,13 +52,12 @@ public class UserToIdentityService {
     public void  createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         String identityName = postDirectIdentityReq.getIdentityName();
 
-        UserToIdentity userToIdentity = new UserToIdentity(userInfo, null, identityName);
+        UserIdentity userIdentity = new UserIdentity(userInfo, identityName);
         try {
-            userToIdentityRepository.save(userToIdentity);
+            userIdentityRepository.save(userIdentity);
         } catch (Exception exception) {
-            throw new BaseException(FAILED_TO_SAVE_USER_TO_IDENTITY);
+            throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
 
         }
     }
-
 }

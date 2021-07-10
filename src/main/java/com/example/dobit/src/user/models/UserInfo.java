@@ -1,7 +1,7 @@
 package com.example.dobit.src.user.models;
 
 import com.example.dobit.config.BaseEntity;
-import com.example.dobit.src.userToIdentity.models.UserToIdentity;
+import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -49,7 +49,7 @@ public class UserInfo extends BaseEntity {
 
 
     @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
-    private List<UserToIdentity> userToIdentitys = new ArrayList<>();
+    private List<UserIdentity> userIdentities = new ArrayList<>();
 
     public UserInfo(String email, String password, String nickname) {
         this.email = email;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 public class PatchPasswordReq {
     private String email;

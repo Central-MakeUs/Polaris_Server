@@ -1,4 +1,4 @@
-package com.example.dobit.src.userToIdentity.models;
+package com.example.dobit.src.userIdentity.models;
 
 
 import lombok.AccessLevel;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 public class PostIdentityReq {
     private List<Integer> identityList;

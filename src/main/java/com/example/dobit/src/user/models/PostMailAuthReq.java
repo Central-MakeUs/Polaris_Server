@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 public class PostMailAuthReq {
     private String email;

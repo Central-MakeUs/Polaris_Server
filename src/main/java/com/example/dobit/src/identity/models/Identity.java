@@ -1,15 +1,12 @@
 package com.example.dobit.src.identity.models;
 
 import com.example.dobit.config.BaseEntity;
-import com.example.dobit.src.userToIdentity.models.UserToIdentity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = false)
@@ -38,8 +35,6 @@ public class Identity extends BaseEntity {
     @Column(name = "status", nullable = false, length = 10)
     private String status = "ACTIVE";
 
-    @OneToMany(mappedBy = "identity", cascade = CascadeType.ALL)
-    private List<UserToIdentity> userToIdentitys = new ArrayList<>();
 
     public Identity(String identityName) {
         this.identityName = identityName;
