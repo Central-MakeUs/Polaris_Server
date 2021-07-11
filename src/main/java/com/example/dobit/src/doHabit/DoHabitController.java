@@ -4,6 +4,7 @@ import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
 import com.example.dobit.src.doHabit.models.DoHabit;
 import com.example.dobit.src.doHabit.models.GetIdentityDoHabitRes;
+import com.example.dobit.src.doHabit.models.PatchIdentityDoHabitReq;
 import com.example.dobit.src.doHabit.models.PostIdentityDoHabitReq;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
@@ -143,7 +144,7 @@ public class DoHabitController {
 
     /**
      * 정체성별 Do 습관 조회하기 API
-     * [GET] /identity/:userIdentityIdx/dohabit/:dhIdx
+     * [GET] /dohabit/:dhIdx
      * @PathVariable userIdentityIdx
      * @return BaseResponse<GetIdentityDoHabitRes>
      */
@@ -189,119 +190,125 @@ public class DoHabitController {
     }
 
 
-//    /**
-//     * 정체성별 Do 습관 수정하기 API
-//     * [PATCH] /identity/:userIdentityIdx/dohabit
-//     * @PathVariable userIdentityIdx
-//     * @RequestBody PatchIdentityDoHabitReq
-//     * @return BaseResponse<Void>
-//     */
-//    @ResponseBody
-//    @PatchMapping("/identity/{userIdentityIdx}/dohabit")
-//    public BaseResponse<Void> patchIdentityDoHabit(@PathVariable Integer userIdentityIdx, @RequestBody PatchIdentityDoHabitReq patchIdentityDoHabitReq) throws BaseException {
-//
-//        Integer jwtUserIdx;
-//        try {
-//            jwtUserIdx = jwtService.getUserIdx();
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
-//        if(userInfo == null){
-//            return new BaseResponse<>(INVALID_USER);
-//        }
-//
-//        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
-//        if(userIdentity==null){
-//            return new BaseResponse<>(INVALID_USER_IDENTITY);
-//        }
-//
-//        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
-//        if (existUserIdentity == null){
-//            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
-//        }
-//
-//        Boolean existDoHabit = doHabitProvider.retrieveExistingDoHabitByUserIdentity(userIdentity);
-//        if(existDoHabit){
-//            return new BaseResponse<>(EXIST_DO_HABIT);
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoName() == null || patchIdentityDoHabitReq.getDoName().length() == 0){
-//            return new BaseResponse<>(EMPTY_DO_NAME);
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoName().length() >= 45){
-//            return new BaseResponse<>(INVALID_DO_NAME);
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoWhen() == null || patchIdentityDoHabitReq.getDoWhen().length() == 0){
-//            return new BaseResponse<>(EMPTY_DO_WHEN);
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoWhen().length() >= 45){
-//            return new BaseResponse<>(INVALID_DO_WHEN);
-//        }
-//
-//
-//        if(patchIdentityDoHabitReq.getDoWhere() == null || patchIdentityDoHabitReq.getDoWhere().length() == 0){
-//            return new BaseResponse<>(EMPTY_DO_WHERE);
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoWhere().length() >= 45){
-//            return new BaseResponse<>(INVALID_DO_WHERE);
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoStart() == null || patchIdentityDoHabitReq.getDoStart().length() == 0){
-//            return new BaseResponse<>(EMPTY_DO_START);
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoStart().length() >= 45){
-//            return new BaseResponse<>(INVALID_DO_START);
-//        }
-//
-//        if( patchIdentityDoHabitReq.getDoRoutine()!=null){
-//            for (int i=0;i<patchIdentityDoHabitReq.getDoRoutine().size();i++){
-//                if(patchIdentityDoHabitReq.getDoRoutine().get(i).length() >= 45){
-//                    return new BaseResponse<>(INVALID_DO_ROUTINE);
-//                }
-//            }
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoEnv()!=null){
-//            for (int i=0;i<patchIdentityDoHabitReq.getDoEnv().size();i++){
-//                if(patchIdentityDoHabitReq.getDoEnv().get(i).length() >= 45){
-//                    return new BaseResponse<>(INVALID_DO_ENV);
-//                }
-//            }
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoNext()!=null){
-//            for (int i=0;i<patchIdentityDoHabitReq.getDoNext().size();i++){
-//                if(patchIdentityDoHabitReq.getDoNext().get(i).length() >= 45){
-//                    return new BaseResponse<>(INVALID_DO_NEXT);
-//                }
-//            }
-//        }
-//
-//        if(patchIdentityDoHabitReq.getDoElse()!=null){
-//            for (int i=0;i<patchIdentityDoHabitReq.getDoElse().size();i++){
-//                if(patchIdentityDoHabitReq.getDoElse().get(i).length() >= 45){
-//                    return new BaseResponse<>(INVALID_DO_ELSE);
-//                }
-//            }
-//        }
-//
-//
-//
-//        try {
-//            doHabitService.updateIdentityDoHabit(userIdentity,patchIdentityDoHabitReq);
-//            return new BaseResponse<>(SUCCESS);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//
-//
-//    }
+    /**
+     * 정체성별 Do 습관 수정하기 API
+     * [PATCH] /identity/:userIdentityIdx/dohabit/:dhIdx
+     * @PathVariable userIdentityIdx,dhIdx
+     * @RequestBody PatchIdentityDoHabitReq
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PatchMapping("/identity/{userIdentityIdx}/dohabit/{dhIdx}")
+    public BaseResponse<Void> patchIdentityDoHabit(@PathVariable Integer userIdentityIdx,@PathVariable Integer dhIdx,  @RequestBody PatchIdentityDoHabitReq patchIdentityDoHabitReq) throws BaseException {
+
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+        if(userIdentity==null){
+            return new BaseResponse<>(INVALID_USER_IDENTITY);
+        }
+
+        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+        if (existUserIdentity == null){
+            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+        }
+
+        DoHabit doHabit = doHabitProvider.retrieveDoHabitByDhIdx(dhIdx);
+        if(doHabit==null){
+            return new BaseResponse<>(INVALID_DO_HABIT);
+        }
+
+
+        Boolean existDoHabit = doHabitProvider.retrieveExistingDoHabitByUserIdentity(userIdentity);
+        if(!existDoHabit){
+            return new BaseResponse<>(INVALID_DO_HABIT);
+        }
+
+        if(patchIdentityDoHabitReq.getDoName() == null || patchIdentityDoHabitReq.getDoName().length() == 0){
+            return new BaseResponse<>(EMPTY_DO_NAME);
+        }
+
+        if(patchIdentityDoHabitReq.getDoName().length() >= 45){
+            return new BaseResponse<>(INVALID_DO_NAME);
+        }
+
+        if(patchIdentityDoHabitReq.getDoWhen() == null || patchIdentityDoHabitReq.getDoWhen().length() == 0){
+            return new BaseResponse<>(EMPTY_DO_WHEN);
+        }
+
+        if(patchIdentityDoHabitReq.getDoWhen().length() >= 45){
+            return new BaseResponse<>(INVALID_DO_WHEN);
+        }
+
+
+        if(patchIdentityDoHabitReq.getDoWhere() == null || patchIdentityDoHabitReq.getDoWhere().length() == 0){
+            return new BaseResponse<>(EMPTY_DO_WHERE);
+        }
+
+        if(patchIdentityDoHabitReq.getDoWhere().length() >= 45){
+            return new BaseResponse<>(INVALID_DO_WHERE);
+        }
+
+        if(patchIdentityDoHabitReq.getDoStart() == null || patchIdentityDoHabitReq.getDoStart().length() == 0){
+            return new BaseResponse<>(EMPTY_DO_START);
+        }
+
+        if(patchIdentityDoHabitReq.getDoStart().length() >= 45){
+            return new BaseResponse<>(INVALID_DO_START);
+        }
+
+        if( patchIdentityDoHabitReq.getDoRoutine()!=null){
+            for (int i=0;i<patchIdentityDoHabitReq.getDoRoutine().size();i++){
+                if(patchIdentityDoHabitReq.getDoRoutine().get(i).length() >= 45){
+                    return new BaseResponse<>(INVALID_DO_ROUTINE);
+                }
+            }
+        }
+
+        if(patchIdentityDoHabitReq.getDoEnv()!=null){
+            for (int i=0;i<patchIdentityDoHabitReq.getDoEnv().size();i++){
+                if(patchIdentityDoHabitReq.getDoEnv().get(i).length() >= 45){
+                    return new BaseResponse<>(INVALID_DO_ENV);
+                }
+            }
+        }
+
+        if(patchIdentityDoHabitReq.getDoNext()!=null){
+            for (int i=0;i<patchIdentityDoHabitReq.getDoNext().size();i++){
+                if(patchIdentityDoHabitReq.getDoNext().get(i).length() >= 45){
+                    return new BaseResponse<>(INVALID_DO_NEXT);
+                }
+            }
+        }
+
+        if(patchIdentityDoHabitReq.getDoElse()!=null){
+            for (int i=0;i<patchIdentityDoHabitReq.getDoElse().size();i++){
+                if(patchIdentityDoHabitReq.getDoElse().get(i).length() >= 45){
+                    return new BaseResponse<>(INVALID_DO_ELSE);
+                }
+            }
+        }
+
+
+
+        try {
+            doHabitService.updateIdentityDoHabit(doHabit,patchIdentityDoHabitReq);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+
+    }
 
 
 }

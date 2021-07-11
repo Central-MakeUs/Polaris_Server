@@ -79,7 +79,10 @@ public enum BaseResponseStatus {
     FAILED_TO_FIND_BY_DHIDX_AND_STATUS(false, 3034, "dhIdx, status로 DoHabit조회에 실패했습니다."),
     FAILED_TO_EXIST_BY_USERINFO_AND_STATUS(false, 3035, "userInfo, status로 DoHabit 존재 여부 확인에 실패했습니다."),
     FAILED_TO_FIND_BY_DOHABIT_AND_STATUS(false, 3036, "doHabit, status로 테이블 조회에 실패했습니다."),
-
+    FAILED_TO_DELETE_DO_ROUTINE(false, 3037, "DoRoutine 삭제에 실패했습니다."),
+    FAILED_TO_DELETE_DO_ENV(false, 3038, "DoEnv 삭제에 실패했습니다."),
+    FAILED_TO_DELETE_DO_NEXT(false, 3039, "DoNext 삭제에 실패했습니다."),
+    FAILED_TO_DELETE_DO_ELSE(false, 3040, "DoElse 삭제에 실패했습니다."),
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
