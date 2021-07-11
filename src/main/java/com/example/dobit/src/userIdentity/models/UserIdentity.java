@@ -2,6 +2,7 @@ package com.example.dobit.src.userIdentity.models;
 
 
 import com.example.dobit.config.BaseEntity;
+import com.example.dobit.src.doHabit.models.DoHabit;
 import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import lombok.AccessLevel;
@@ -10,6 +11,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = false)
@@ -50,6 +53,11 @@ public class UserIdentity extends BaseEntity {
      */
     @Column(name = "status", nullable = false, length = 10)
     private String status = "ACTIVE";
+
+
+    @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL)
+    private List<DoHabit> doHabits = new ArrayList<>();
+
 
 
     public UserIdentity(UserInfo userInfo,String userIdentityName,UserIdentityColor userIdentityColor){
