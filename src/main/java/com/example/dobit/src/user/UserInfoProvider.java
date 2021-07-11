@@ -5,7 +5,7 @@ import com.example.dobit.utils.AES128;
 import com.example.dobit.utils.JwtService;
 import com.example.dobit.config.secret.Secret;
 import com.example.dobit.config.BaseException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,15 +13,11 @@ import java.util.List;
 import static com.example.dobit.config.BaseResponseStatus.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserInfoProvider {
     private final UserInfoRepository userInfoRepository;
     private final JwtService jwtService;
 
-    @Autowired
-    public UserInfoProvider(UserInfoRepository userInfoRepository, JwtService jwtService) {
-        this.userInfoRepository = userInfoRepository;
-        this.jwtService = jwtService;
-    }
 
     /**
      * 이메일로 회원 조회
