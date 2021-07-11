@@ -12,4 +12,8 @@ import java.util.List;
 public interface UserIdentityRepository extends CrudRepository<UserIdentity, Integer> {
 
     List<UserIdentity> findByUserInfoAndStatus(UserInfo userInfo, String active);
+
+    Boolean existsByUserInfoAndUserIdentityIdxAndStatus(UserInfo userInfo, Integer userIdentityIdx, String active);
+
+    UserIdentity findByUserIdentityIdxAndStatus(Integer userIdentityIdx, String active);
 }

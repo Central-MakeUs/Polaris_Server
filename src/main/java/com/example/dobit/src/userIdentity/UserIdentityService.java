@@ -20,6 +20,7 @@ import static com.example.dobit.config.BaseResponseStatus.*;
 @RequiredArgsConstructor
 public class UserIdentityService {
     private final IdentityProvider identityProvider;
+    private final UserIdentityProvider userIdentityProvider;
     private final UserIdentityRepository userIdentityRepository;
     private final UserIdentityColorProvider userIdentityColorProvider;
 
@@ -53,7 +54,7 @@ public class UserIdentityService {
      * @return void
      * @throws BaseException
      */
-    public void  createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
+    public void createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         String identityName = postDirectIdentityReq.getIdentityName();
         UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(9); //black
         UserIdentity userIdentity = new UserIdentity(userInfo, identityName,userIdentityColor);
@@ -62,6 +63,24 @@ public class UserIdentityService {
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
 
+        }
+    }
+
+    /**
+     * 정체성 삭제하기 API
+     * @param userIdentityIdx
+     * @return void
+     * @throws BaseException
+     */
+    public void updateIdentityStatus(Integer userIdentityIdx) throws BaseException{
+        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+
+        userIdentity.setStatus("INACTIVE");
+
+        try{
+            userIdentityRepository.save(userIdentity);
+        }catch (Exception exception){
+            throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
         }
     }
 }

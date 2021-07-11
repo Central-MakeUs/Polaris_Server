@@ -10,6 +10,7 @@ import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.models.GetIdentityRes;
 import com.example.dobit.src.userIdentity.models.PostDirectIdentityReq;
 import com.example.dobit.src.userIdentity.models.PostIdentityReq;
+import com.example.dobit.src.userIdentity.models.UserIdentity;
 import com.example.dobit.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -144,5 +145,45 @@ public class UserIdentityController {
         }
 
     }
+
+
+    /**
+     * 정체성 삭제하기 API
+     * [PATCH] /identity/:userIdentityIdx/status
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PatchMapping("/identity/{userIdentityIdx}/status")
+    public BaseResponse<Void> patchIdentityStatus(@PathVariable Integer userIdentityIdx) throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+        if(userIdentity==null){
+            return new BaseResponse<>(INVALID_USER_IDENTITY);
+        }
+
+        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(jwtUserIdx,userIdentityIdx);
+        if (existUserIdentity == null){
+            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+        }
+
+
+        try {
+            userIdentityService.updateIdentityStatus(userIdentityIdx);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.dobit.src.userIdentity;
 
 import com.example.dobit.config.BaseException;
+import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.models.GetIdentityRes;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
@@ -10,12 +11,28 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.dobit.config.BaseResponseStatus.FAILED_TO_FIND_BY_USERINFO_AND_STATUS;
+import static com.example.dobit.config.BaseResponseStatus.*;
 
 @Service
 @RequiredArgsConstructor
 public class UserIdentityProvider {
     private final UserIdentityRepository userIdentityRepository;
+    private final UserInfoProvider userInfoProvider;
+
+    /**
+     * idx로 유저정체성 조회하기
+     */
+    public UserIdentity retrieveUserIdentityByUserIdentityIdx(Integer userIdentityIdx)throws BaseException{
+        UserIdentity userIdentity;
+        try{
+            userIdentity = userIdentityRepository.findByUserIdentityIdxAndStatus(userIdentityIdx,"ACTIVE");
+        }catch (Exception ignored){
+            throw new BaseException(FAILED_TO_FIND_BY_USERIDENTITYIDX_AND_STATUS);
+        }
+        return userIdentity;
+
+    }
+
 
     /**
      * 정체성 조회하기 API
@@ -45,6 +62,27 @@ public class UserIdentityProvider {
         }
         return getIdentityResList;
 
+    }
+
+    /**
+     * 존재하는 유저정체성인지 확인
+     * @param jwtUserIdx,userIdentityIdx
+     * @return existEmail
+     * @throws BaseException
+     */
+    public Boolean retrieveExistingUserIdentity(Integer jwtUserIdx,Integer userIdentityIdx) throws BaseException {
+        Boolean existUserIdentity;
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+
+        try {
+            existUserIdentity = userIdentityRepository.existsByUserInfoAndUserIdentityIdxAndStatus(userInfo, userIdentityIdx,"ACTIVE");
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_EXIST_BY_USERINFO_AND_USERIDENTITYIDX_AND_STATUS);
+        }
+
+
+        return existUserIdentity;
     }
 
 }
