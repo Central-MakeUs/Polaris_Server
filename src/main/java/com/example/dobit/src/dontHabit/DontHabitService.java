@@ -4,12 +4,14 @@ import com.example.dobit.config.BaseException;
 import com.example.dobit.src.doElse.models.DoElse;
 import com.example.dobit.src.doEnv.models.DoEnv;
 import com.example.dobit.src.doHabit.models.DoHabit;
+import com.example.dobit.src.doHabit.models.PatchIdentityDoHabitReq;
 import com.example.dobit.src.doHabit.models.PostIdentityDoHabitReq;
 import com.example.dobit.src.doNext.models.DoNext;
 import com.example.dobit.src.doRoutine.models.DoRoutine;
 import com.example.dobit.src.dontElse.DontElseRepository;
 import com.example.dobit.src.dontElse.models.DontElse;
 import com.example.dobit.src.dontHabit.models.DontHabit;
+import com.example.dobit.src.dontHabit.models.PatchIdentityDontHabitReq;
 import com.example.dobit.src.dontHabit.models.PostIdentityDontHabitReq;
 import com.example.dobit.src.dontMotive.DontMotiveRepository;
 import com.example.dobit.src.dontMotive.models.DontMotive;
@@ -97,4 +99,115 @@ public class DontHabitService {
 
 
     }
+
+    /**
+     * 정체성별 Dont 습관 수정하기 API
+     * @param dontHabit, patchIdentityDontHabitReq
+     * @return void
+     * @throws BaseException
+     */
+    @Transactional
+    public void  updateIdentityDontHabit(DontHabit dontHabit, PatchIdentityDontHabitReq patchIdentityDontHabitReq) throws BaseException {
+
+        String dontName = patchIdentityDontHabitReq.getDontName();
+        String dontAdvantage = patchIdentityDontHabitReq.getDontAdvantage();
+        String dontEnv = patchIdentityDontHabitReq.getDontEnv();
+        List<String> dontRoutineList = patchIdentityDontHabitReq.getDontRoutine();
+        List<String> dontMotiveList = patchIdentityDontHabitReq.getDontMotive();
+        List<String> dontElseList = patchIdentityDontHabitReq.getDontElse();
+
+        try{
+            dontHabit.setDnhName(dontName);
+            dontHabit.setDnhAdvantage(dontAdvantage);
+            dontHabit.setDnhEnv(dontEnv);
+            dontHabitRepository.save(dontHabit);
+        }catch(Exception e){
+            throw new BaseException(FAILED_TO_SAVE_DONT_HABIT);
+        }
+
+
+        List<DontRoutine> dontRoutines;
+        try {
+            dontRoutines = dontRoutineRepository.findByDontHabitAndStatus(dontHabit,"ACTIVE");
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_FIND_BY_DONTHABIT_AND_STATUS);
+        }
+        try{
+            for(int i=0;i<dontRoutines.size();i++){
+                dontRoutines.get(i).setStatus("INACTIVE");
+            }
+            dontRoutineRepository.saveAll(dontRoutines);
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_DELETE_DONT_ROUTINE);
+        }
+        if (dontRoutineList!=null){
+            for(int i =0;i<dontRoutineList.size();i++) {
+                String dnRoutineContent = dontRoutineList.get(i);
+                DontRoutine dontRoutine = new DontRoutine(dnRoutineContent, dontHabit);
+                try{
+                    dontRoutineRepository.save(dontRoutine);
+                }catch (Exception exception){
+                    throw new BaseException(FAILED_TO_SAVE_DONT_ROUTINE);
+                }
+            }
+        }
+
+        List<DontMotive> dontMotives;
+        try {
+            dontMotives = dontMotiveRepository.findByDontHabitAndStatus(dontHabit,"ACTIVE");
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_FIND_BY_DONTHABIT_AND_STATUS);
+        }
+
+        try{
+            for(int i=0;i<dontMotives.size();i++){
+                dontMotives.get(i).setStatus("INACTIVE");
+            }
+            dontMotiveRepository.saveAll(dontMotives);
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_DELETE_DONT_MOTIVE);
+        }
+        if (dontMotiveList!=null){
+            for(int i=0;i<dontMotiveList.size();i++){
+                String dnMotiveContent = dontMotiveList.get(i);
+                DontMotive dontMotive = new DontMotive(dnMotiveContent,dontHabit);
+                try{
+                    dontMotiveRepository.save(dontMotive);
+                }catch(Exception exception) {
+                    throw new BaseException(FAILED_TO_SAVE_DONT_MOTIVE);
+                }
+            }
+        }
+
+
+        List<DontElse> dontElses;
+        try {
+            dontElses = dontElseRepository.findByDontHabitAndStatus(dontHabit,"ACTIVE");
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_FIND_BY_DONTHABIT_AND_STATUS);
+        }
+
+        try{
+            for(int i=0;i<dontElses.size();i++){
+                dontElses.get(i).setStatus("INACTIVE");
+            }
+            dontElseRepository.saveAll(dontElses);
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_DELETE_DONT_ELSE);
+        }
+        if (dontElseList!=null){
+            for(int i=0;i<dontElseList.size();i++){
+                String dnElseContent = dontElseList.get(i);
+                DontElse dontElse = new DontElse(dnElseContent,dontHabit);
+                try {
+                    dontElseRepository.save(dontElse);
+                }catch (Exception e){
+                    throw new BaseException(FAILED_TO_SAVE_DONT_ELSE);
+                }
+            }
+        }
+
+
+    }
+
 }

@@ -4,8 +4,10 @@ import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
 import com.example.dobit.src.doHabit.models.DoHabit;
 import com.example.dobit.src.doHabit.models.GetIdentityDoHabitRes;
+import com.example.dobit.src.doHabit.models.PatchIdentityDoHabitReq;
 import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.dontHabit.models.GetIdentityDontHabitRes;
+import com.example.dobit.src.dontHabit.models.PatchIdentityDontHabitReq;
 import com.example.dobit.src.dontHabit.models.PostIdentityDontHabitReq;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
@@ -145,7 +147,7 @@ public class DontHabitController {
      */
     @ResponseBody
     @GetMapping("/donthabit/{dnhIdx}")
-    public BaseResponse<GetIdentityDontHabitRes> getIdentityDoHabit(@PathVariable Integer dnhIdx) throws BaseException {
+    public BaseResponse<GetIdentityDontHabitRes> getIdentityDontHabit(@PathVariable Integer dnhIdx) throws BaseException {
 
         Integer jwtUserIdx;
         try {
@@ -186,4 +188,110 @@ public class DontHabitController {
 
 
 
+    /**
+     * 정체성별 Dont 습관 수정하기 API
+     * [PATCH] /donthabit/:dnhIdx
+     * @PathVariable dnhIdx
+     * @RequestBody PatchIdentityDontHabitReq
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PatchMapping("/donthabit/:dnhIdx")
+    public BaseResponse<Void> patchIdentityDontHabit(@PathVariable Integer dnhIdx,  @RequestBody PatchIdentityDontHabitReq patchIdentityDontHabitReq) throws BaseException {
+
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+//        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+//        if(userIdentity==null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY);
+//        }
+//
+//        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+//        if (existUserIdentity == null){
+//            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+//        }
+
+        DontHabit dontHabit = dontHabitProvider.retrieveDontHabitByDnhIdx(dnhIdx);
+        if(dontHabit==null){
+            return new BaseResponse<>(INVALID_DONT_HABIT);
+        }
+
+        String dontName = patchIdentityDontHabitReq.getDontName();
+        String dontAdvantage = patchIdentityDontHabitReq.getDontAdvantage();
+        String dontEnv = patchIdentityDontHabitReq.getDontEnv();
+        List<String> dontRoutine = patchIdentityDontHabitReq.getDontRoutine();
+        List<String> dontMotive = patchIdentityDontHabitReq.getDontMotive();
+        List<String> dontElse = patchIdentityDontHabitReq.getDontElse();
+
+        if(dontName == null || dontName.length() == 0){
+            return new BaseResponse<>(EMPTY_DONT_NAME);
+        }
+
+        if(dontName.length() >= 45){
+            return new BaseResponse<>(INVALID_DONT_NAME);
+        }
+
+        if(dontAdvantage == null || dontAdvantage.length() == 0){
+            return new BaseResponse<>(EMPTY_DONT_ADVANTAGE);
+        }
+
+        if(dontAdvantage.length() >= 45){
+            return new BaseResponse<>(INVALID_DONT_ADVANTAGE);
+        }
+
+
+        if(dontEnv == null || dontEnv.length() == 0){
+            return new BaseResponse<>(EMPTY_DONT_ENV);
+        }
+
+        if(dontEnv.length() >= 45){
+            return new BaseResponse<>(INVALID_DONT_ENV);
+        }
+
+
+        if( dontRoutine!=null){
+            for (int i=0;i<dontRoutine.size();i++){
+                if(dontRoutine.get(i).length() >= 45){
+                    return new BaseResponse<>(INVALID_DONT_ROUTINE);
+                }
+            }
+        }
+
+        if(dontMotive!=null){
+            for (int i=0;i<dontMotive.size();i++){
+                if(dontMotive.get(i).length() >= 45){
+                    return new BaseResponse<>(INVALID_DONT_MOTIVE);
+                }
+            }
+        }
+
+        if(dontElse!=null){
+            for (int i=0;i<dontElse.size();i++){
+                if(dontElse.get(i).length() >= 45){
+                    return new BaseResponse<>(INVALID_DONT_ELSE);
+                }
+            }
+        }
+
+
+
+
+        try {
+            dontHabitService.updateIdentityDontHabit(dontHabit,patchIdentityDontHabitReq);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+
+    }
 }
