@@ -33,6 +33,8 @@ public enum BaseResponseStatus {
     EMPTY_USERIDX(false, 2043, "userIdx를 입력하세요."),
     INVALID_USER_IDENTITY(false, 2044, "유효하지않은 유저정체성입니다."),
     DO_NOT_MATCH_USER_AND_USERIDENTITYIDX(false, 2045, "userIdentityIdx와 user가 일치하지 않습니다."),
+    EMPTY_USERIDENTITYCOLORIDX(false, 2046, "userIdentityColorIdx를 입력하세요."),
+    INVALID_USER_IDENTITY_COLOR(false, 2047, "유효하지 않은 userIdentityColorIdx입니다."),
 
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
@@ -55,11 +57,6 @@ public enum BaseResponseStatus {
     INACTIVE_USER_IDENTITY_COLOR(false, 3026, "비활성화된 유저 정체성 컬러입니다."),
     FAILED_TO_EXIST_BY_USERINFO_AND_USERIDENTITYIDX_AND_STATUS(false, 3027, "userInfo,userIdentityIdx,status로 userIdentity 조회에 실패했습니다."),
     FAILED_TO_FIND_BY_USERIDENTITYIDX_AND_STATUS(false, 3028, "userIdentityIdx, status로 userIdentity 조회에 실패했습니다."),
-//    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
-//    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
-//    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),
-//    FAILED_TO_DELETE_USER(false, 3015, "회원 탈퇴에 실패하였습니다."),
-//    FAILED_TO_PATCH_USER(false, 3016, "개인정보 수정에 실패하였습니다."),
 
 
 

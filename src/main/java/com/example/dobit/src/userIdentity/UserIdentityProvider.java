@@ -66,14 +66,12 @@ public class UserIdentityProvider {
 
     /**
      * 존재하는 유저정체성인지 확인
-     * @param jwtUserIdx,userIdentityIdx
+     * @param userInfo,userIdentityIdx
      * @return existEmail
      * @throws BaseException
      */
-    public Boolean retrieveExistingUserIdentity(Integer jwtUserIdx,Integer userIdentityIdx) throws BaseException {
+    public Boolean retrieveExistingUserIdentity(UserInfo userInfo,Integer userIdentityIdx) throws BaseException {
         Boolean existUserIdentity;
-
-        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
 
         try {
             existUserIdentity = userIdentityRepository.existsByUserInfoAndUserIdentityIdxAndStatus(userInfo, userIdentityIdx,"ACTIVE");

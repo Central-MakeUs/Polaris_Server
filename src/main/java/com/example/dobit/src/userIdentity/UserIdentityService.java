@@ -83,4 +83,22 @@ public class UserIdentityService {
             throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
         }
     }
+
+
+    /**
+     * 정체성 컬러 수정하기 API
+     * @param userIdentity,userIdentityColor
+     * @return void
+     * @throws BaseException
+     */
+    public void updateIdentityColor(UserIdentity userIdentity,UserIdentityColor userIdentityColor) throws BaseException{
+
+        userIdentity.setUserIdentityColor(userIdentityColor);
+
+        try{
+            userIdentityRepository.save(userIdentity);
+        }catch (Exception exception){
+            throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
+        }
+    }
 }

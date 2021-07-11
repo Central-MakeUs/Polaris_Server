@@ -7,10 +7,9 @@ import com.example.dobit.src.identity.IdentityProvider;
 import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
-import com.example.dobit.src.userIdentity.models.GetIdentityRes;
-import com.example.dobit.src.userIdentity.models.PostDirectIdentityReq;
-import com.example.dobit.src.userIdentity.models.PostIdentityReq;
-import com.example.dobit.src.userIdentity.models.UserIdentity;
+import com.example.dobit.src.userIdentity.models.*;
+import com.example.dobit.src.userIdentityColor.UserIdentityColorProvider;
+import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import com.example.dobit.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +26,7 @@ public class UserIdentityController {
     private final UserIdentityService userIdentityService;
     private final UserInfoProvider userInfoProvider;
     private final IdentityProvider identityProvider;
+    private final UserIdentityColorProvider userIdentityColorProvider;
     private final JwtService jwtService;
 
 
@@ -171,7 +171,7 @@ public class UserIdentityController {
             return new BaseResponse<>(INVALID_USER_IDENTITY);
         }
 
-        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(jwtUserIdx,userIdentityIdx);
+        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
         if (existUserIdentity == null){
             return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
         }
@@ -185,5 +185,52 @@ public class UserIdentityController {
         }
     }
 
+    /**
+     * 정체성 컬러 수정하기 API
+     * [PATCH] /identity/:userIdentityIdx/color
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PatchMapping("/identity/{userIdentityIdx}/color")
+    public BaseResponse<Void> patchIdentityColor(@PathVariable Integer userIdentityIdx, @RequestBody PatchIdentityColorReq patchIdentityColorReq) throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+        if(userIdentity==null){
+            return new BaseResponse<>(INVALID_USER_IDENTITY);
+        }
+
+        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+        if (existUserIdentity == null){
+            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+        }
+
+
+        if (patchIdentityColorReq.getUserIdentityColorIdx() == null || patchIdentityColorReq.getUserIdentityColorIdx() <= 0) {
+            return new BaseResponse<>(EMPTY_USERIDENTITYCOLORIDX);
+        }
+
+        UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(patchIdentityColorReq.getUserIdentityColorIdx());
+        if(userIdentityColor == null){
+            return new BaseResponse<>(INVALID_USER_IDENTITY_COLOR);
+        }
+
+
+        try {
+            userIdentityService.updateIdentityColor(userIdentity,userIdentityColor);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 }
