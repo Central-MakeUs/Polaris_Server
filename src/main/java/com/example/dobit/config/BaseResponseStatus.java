@@ -49,7 +49,16 @@ public enum BaseResponseStatus {
     INVALID_DO_NAME(false, 2059, "유효하지 않은 doName입니다."),
     EXIST_DO_HABIT(false, 2060, "존재하는 DoHabit입니다."),
     INVALID_DO_HABIT(false, 2061, "유효하지 않은 DoHabit입니다."),
-
+    EXIST_DONT_HABIT(false, 2062, "존재하는 DontHabit입니다."),
+    EMPTY_DONT_NAME(false, 2063, "dontName을 입력하세요."),
+    INVALID_DONT_NAME(false, 2064, "유효하지 않은 dontName입니다."),
+    EMPTY_DONT_ADVANTAGE(false, 2065, "dontAdvantage를 입력하세요."),
+    INVALID_DONT_ADVANTAGE(false, 2066, "유효하지 않은 dontAdvantage입니다."),
+    EMPTY_DONT_ENV(false, 2067, "dontEnv를 입력하세요."),
+    INVALID_DONT_ENV(false, 2068, "유효하지 않은 dontEnv입니다."),
+    INVALID_DONT_ROUTINE(false, 2069, "유효하지 않은 dontRoutine입니다."),
+    INVALID_DONT_MOTIVE(false, 2070, "유효하지 않은 dontMotive입니다."),
+    INVALID_DONT_ELSE(false, 2071, "유효하지 않은 dontElse입니다."),
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
     NOT_FOUND_USER(false, 3010, "존재하지 않는 회원입니다."),
@@ -83,6 +92,12 @@ public enum BaseResponseStatus {
     FAILED_TO_DELETE_DO_ENV(false, 3038, "DoEnv 삭제에 실패했습니다."),
     FAILED_TO_DELETE_DO_NEXT(false, 3039, "DoNext 삭제에 실패했습니다."),
     FAILED_TO_DELETE_DO_ELSE(false, 3040, "DoElse 삭제에 실패했습니다."),
+    FAILED_TO_EXIST_BY_USERIDENTITY_AND_STATUS(false, 3041, "UserIdentity,Status로 테이블 조회에 실패했습니다."),
+    FAILED_TO_FIND_BY_DNHIDX_AND_STATUS(false, 3042, "dnhIdx,Status로 테이블 조회에 실패했습니다."),
+    FAILED_TO_SAVE_DONT_HABIT(false, 3043, "DontHabit 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DONT_ROUTINE(false, 3044, "DontRoutine 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DONT_MOTIVE(false, 3045, "DontMotive 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DONT_ELSE(false, 3046, "DontElse 저장에 실패했습니다."),
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),

@@ -3,6 +3,7 @@ package com.example.dobit.src.userIdentity.models;
 
 import com.example.dobit.config.BaseEntity;
 import com.example.dobit.src.doHabit.models.DoHabit;
+import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import lombok.AccessLevel;
@@ -57,6 +58,10 @@ public class UserIdentity extends BaseEntity {
 
     @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL)
     private List<DoHabit> doHabits = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL)
+    private List<DontHabit> dontHabits = new ArrayList<>();
 
 
 

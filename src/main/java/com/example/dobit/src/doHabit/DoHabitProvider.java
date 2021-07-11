@@ -11,7 +11,6 @@ import com.example.dobit.src.doNext.DoNextRepository;
 import com.example.dobit.src.doNext.models.DoNext;
 import com.example.dobit.src.doRoutine.DoRoutineRepository;
 import com.example.dobit.src.doRoutine.models.DoRoutine;
-import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class DoHabitProvider {
     }
 
     /**
-     * userInfo로 DoHabit 조회
+     * userIdentity로 DoHabit 조회
      * @param userIdentity
      * @return existDoHabit
      * @throws BaseException
@@ -61,7 +60,7 @@ public class DoHabitProvider {
         try {
             existDoHabit = doHabitRepository.existsByUserIdentityAndStatus(userIdentity,"ACTIVE");
         } catch (Exception ignored) {
-            throw new BaseException(FAILED_TO_EXIST_BY_USERINFO_AND_STATUS);
+            throw new BaseException(FAILED_TO_EXIST_BY_USERIDENTITY_AND_STATUS);
         }
 
         return existDoHabit;
