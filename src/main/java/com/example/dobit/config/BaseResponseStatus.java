@@ -49,6 +49,8 @@ public enum BaseResponseStatus {
     INACTIVE_IDENTITY(false, 3022, "비활성화된 정체성입니다."),
     FAILED_TO_SAVE_USER_IDENTITY(false, 3023, "유저 정체성 저장에 실패했습니다."),
     FAILED_TO_FIND_BY_USERINFO_AND_STATUS(false, 3024, "userInfo, status로 유저 정체성 저장에 실패했습니다."),
+    FAILED_TO_FIND_BY_USER_IDENTITY_COLORIDX(false, 3025, "userIdentityColorIdx로 유저정체성컬러 조회에 실패했습니다."),
+    INACTIVE_USER_IDENTITY_COLOR(false, 3026, "비활성화된 유저 정체성 컬러입니다."),
 //    FAILED_TO_GET_USER(false, 3012, "회원 정보 조회에 실패하였습니다."),
 //    FAILED_TO_POST_USER(false, 3013, "회원가입에 실패하였습니다."),
 //    FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),

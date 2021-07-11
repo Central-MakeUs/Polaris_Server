@@ -7,6 +7,8 @@ import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.models.PostDirectIdentityReq;
 import com.example.dobit.src.userIdentity.models.PostIdentityReq;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
+import com.example.dobit.src.userIdentityColor.UserIdentityColorProvider;
+import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import static com.example.dobit.config.BaseResponseStatus.*;
 public class UserIdentityService {
     private final IdentityProvider identityProvider;
     private final UserIdentityRepository userIdentityRepository;
+    private final UserIdentityColorProvider userIdentityColorProvider;
 
     /**
      * 정체성 추가하기 API
@@ -33,8 +36,9 @@ public class UserIdentityService {
             Integer identityIdx = identityList.get(i);
             Identity identity = identityProvider.retrieveIdentityByIdentityIdx(identityIdx);
             String identityName = identity.getIdentityName();
+            UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(9); //black
 
-            UserIdentity userIdentity = new UserIdentity(userInfo, identityName);
+            UserIdentity userIdentity = new UserIdentity(userInfo, identityName,userIdentityColor);
             try {
                 userIdentityRepository.save(userIdentity);
             } catch (Exception exception) {
@@ -43,7 +47,7 @@ public class UserIdentityService {
         }
     }
 
-        /**
+    /**
      * 정체성 직접 추가하기 API
      * @param userInfo, postDirectIdentityReq
      * @return void
@@ -51,8 +55,8 @@ public class UserIdentityService {
      */
     public void  createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         String identityName = postDirectIdentityReq.getIdentityName();
-
-        UserIdentity userIdentity = new UserIdentity(userInfo, identityName);
+        UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(9); //black
+        UserIdentity userIdentity = new UserIdentity(userInfo, identityName,userIdentityColor);
         try {
             userIdentityRepository.save(userIdentity);
         } catch (Exception exception) {

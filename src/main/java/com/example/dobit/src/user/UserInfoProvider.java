@@ -15,7 +15,7 @@ import static com.example.dobit.config.BaseResponseStatus.*;
 @Service
 public class UserInfoProvider {
     private final UserInfoRepository userInfoRepository;
-        private final JwtService jwtService;
+    private final JwtService jwtService;
 
     @Autowired
     public UserInfoProvider(UserInfoRepository userInfoRepository, JwtService jwtService) {

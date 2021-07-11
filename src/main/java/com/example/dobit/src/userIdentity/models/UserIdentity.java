@@ -3,6 +3,7 @@ package com.example.dobit.src.userIdentity.models;
 
 import com.example.dobit.config.BaseEntity;
 import com.example.dobit.src.user.models.UserInfo;
+import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,14 +39,22 @@ public class UserIdentity extends BaseEntity {
     private String userIdentityName;
 
     /**
+     * 유저 정체성 컬러
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userIdentityColorIdx", nullable = false)
+    private UserIdentityColor userIdentityColor;
+
+    /**
      * 상태
      */
     @Column(name = "status", nullable = false, length = 10)
     private String status = "ACTIVE";
 
 
-    public UserIdentity(UserInfo userInfo,String userIdentityName){
+    public UserIdentity(UserInfo userInfo,String userIdentityName,UserIdentityColor userIdentityColor){
         this.userInfo = userInfo;
         this.userIdentityName = userIdentityName;
+        this.userIdentityColor = userIdentityColor;
     }
 }

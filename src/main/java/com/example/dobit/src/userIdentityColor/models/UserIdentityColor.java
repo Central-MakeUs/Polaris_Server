@@ -1,13 +1,15 @@
 package com.example.dobit.src.userIdentityColor.models;
 
 import com.example.dobit.config.BaseEntity;
-import com.example.dobit.src.user.models.UserInfo;
+import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -28,7 +30,7 @@ public class UserIdentityColor extends BaseEntity {
      * 컬러
      */
     @Column(name = "userIdentityColorName",nullable = false,length = 45)
-    private String userIdentityColorName;
+    private String userIdentityColorName = "black";
 
     /**
      * 상태
@@ -36,6 +38,9 @@ public class UserIdentityColor extends BaseEntity {
     @Column(name = "status", nullable = false, length = 10)
     private String status = "ACTIVE";
 
+
+    @OneToMany(mappedBy = "userIdentityColor", cascade = CascadeType.ALL)
+    private List<UserIdentity> userIdentities = new ArrayList<>();
 
     public UserIdentityColor(String userIdentityColorName){
         this.userIdentityColorName = userIdentityColorName;

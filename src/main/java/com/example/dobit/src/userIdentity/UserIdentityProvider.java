@@ -35,10 +35,12 @@ public class UserIdentityProvider {
         for(int i=0;i<userIdentityList.size();i++){
             Integer userIdentityIdx = userIdentityList.get(i).getUserIdentityIdx();
             String userIdentityName = userIdentityList.get(i).getUserIdentityName();
+            Integer userIdentityColorIdx  = userIdentityList.get(i).getUserIdentityColor().getUserIdentityColorIdx();
+            String userIdentityColorName = userIdentityList.get(i).getUserIdentityColor().getUserIdentityColorName();
             String doHabit = null;
             String doNotHabit = null;
 
-            GetIdentityRes getIdentityRes = new GetIdentityRes(userIdentityIdx, userIdentityName, doHabit, doNotHabit);
+            GetIdentityRes getIdentityRes = new GetIdentityRes(userIdentityIdx, userIdentityName, userIdentityColorIdx, userIdentityColorName,doHabit, doNotHabit);
             getIdentityResList.add(getIdentityRes);
         }
         return getIdentityResList;

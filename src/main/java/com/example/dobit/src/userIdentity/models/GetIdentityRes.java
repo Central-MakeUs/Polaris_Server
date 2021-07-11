@@ -8,6 +8,8 @@ import lombok.Getter;
 public class GetIdentityRes {
     private final Integer userIdentityIdx;
     private final String userIdentityName;
+    private final Integer userIdentityColorIdx;
+    private final String userIdentityColorName;
     private final String doHabit;
     private final String doNotHabit;
 }
