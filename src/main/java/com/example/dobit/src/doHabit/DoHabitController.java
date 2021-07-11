@@ -145,12 +145,12 @@ public class DoHabitController {
     /**
      * 정체성별 Do 습관 조회하기 API
      * [GET] /dohabit/:dhIdx
-     * @PathVariable userIdentityIdx
+     * @PathVariable dhIdx
      * @return BaseResponse<GetIdentityDoHabitRes>
      */
     @ResponseBody
-    @GetMapping("/identity/{userIdentityIdx}/dohabit/{dhIdx}")
-    public BaseResponse<GetIdentityDoHabitRes> getIdentityDoHabit(@PathVariable Integer userIdentityIdx,@PathVariable Integer dhIdx) throws BaseException {
+    @GetMapping("/dohabit/{dhIdx}")
+    public BaseResponse<GetIdentityDoHabitRes> getIdentityDoHabit(@PathVariable Integer dhIdx) throws BaseException {
 
         Integer jwtUserIdx;
         try {
@@ -163,15 +163,15 @@ public class DoHabitController {
             return new BaseResponse<>(INVALID_USER);
         }
 
-        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
-        if(userIdentity==null){
-            return new BaseResponse<>(INVALID_USER_IDENTITY);
-        }
-
-        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
-        if (existUserIdentity == null){
-            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
-        }
+//        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+//        if(userIdentity==null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY);
+//        }
+//
+//        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+//        if (existUserIdentity == null){
+//            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+//        }
 
         DoHabit doHabit = doHabitProvider.retrieveDoHabitByDhIdx(dhIdx);
         if(doHabit==null){
@@ -192,14 +192,14 @@ public class DoHabitController {
 
     /**
      * 정체성별 Do 습관 수정하기 API
-     * [PATCH] /identity/:userIdentityIdx/dohabit/:dhIdx
-     * @PathVariable userIdentityIdx,dhIdx
+     * [PATCH] /dohabit/:dhIdx
+     * @PathVariable dhIdx
      * @RequestBody PatchIdentityDoHabitReq
      * @return BaseResponse<Void>
      */
     @ResponseBody
-    @PatchMapping("/identity/{userIdentityIdx}/dohabit/{dhIdx}")
-    public BaseResponse<Void> patchIdentityDoHabit(@PathVariable Integer userIdentityIdx,@PathVariable Integer dhIdx,  @RequestBody PatchIdentityDoHabitReq patchIdentityDoHabitReq) throws BaseException {
+    @PatchMapping("/dohabit/{dhIdx}")
+    public BaseResponse<Void> patchIdentityDoHabit(@PathVariable Integer dhIdx,  @RequestBody PatchIdentityDoHabitReq patchIdentityDoHabitReq) throws BaseException {
 
         Integer jwtUserIdx;
         try {
@@ -212,15 +212,15 @@ public class DoHabitController {
             return new BaseResponse<>(INVALID_USER);
         }
 
-        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
-        if(userIdentity==null){
-            return new BaseResponse<>(INVALID_USER_IDENTITY);
-        }
-
-        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
-        if (existUserIdentity == null){
-            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
-        }
+//        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+//        if(userIdentity==null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY);
+//        }
+//
+//        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+//        if (existUserIdentity == null){
+//            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+//        }
 
         DoHabit doHabit = doHabitProvider.retrieveDoHabitByDhIdx(dhIdx);
         if(doHabit==null){
@@ -228,10 +228,10 @@ public class DoHabitController {
         }
 
 
-        Boolean existDoHabit = doHabitProvider.retrieveExistingDoHabitByUserIdentity(userIdentity);
-        if(!existDoHabit){
-            return new BaseResponse<>(INVALID_DO_HABIT);
-        }
+//        Boolean existDoHabit = doHabitProvider.retrieveExistingDoHabitByUserIdentity(userIdentity);
+//        if(!existDoHabit){
+//            return new BaseResponse<>(INVALID_DO_HABIT);
+//        }
 
         if(patchIdentityDoHabitReq.getDoName() == null || patchIdentityDoHabitReq.getDoName().length() == 0){
             return new BaseResponse<>(EMPTY_DO_NAME);
