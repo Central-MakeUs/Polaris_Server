@@ -35,6 +35,19 @@ public enum BaseResponseStatus {
     DO_NOT_MATCH_USER_AND_USERIDENTITYIDX(false, 2045, "userIdentityIdx와 user가 일치하지 않습니다."),
     EMPTY_USERIDENTITYCOLORIDX(false, 2046, "userIdentityColorIdx를 입력하세요."),
     INVALID_USER_IDENTITY_COLOR(false, 2047, "유효하지 않은 userIdentityColorIdx입니다."),
+    EMPTY_DO_WHEN(false, 2048, "doWhen을 입력하세요."),
+    INVALID_DO_WHEN(false, 2049, "유효하지 않은 doWhen입니다."),
+    EMPTY_DO_WHERE(false, 2050, "doWhere을 입력하세요."),
+    INVALID_DO_WHERE(false, 2051, "유효하지 않은 doWhere입니다."),
+    EMPTY_DO_START(false, 2052, "doStart를 입력하세요."),
+    INVALID_DO_START(false, 2053, "유효하지 않은 doStart입니다."),
+    INVALID_DO_ROUTINE(false, 2054, "유효하지 않은 doRoutine입니다."),
+    INVALID_DO_ENV(false, 2055, "유효하지 않은 doEnv입니다."),
+    INVALID_DO_NEXT(false, 2056, "유효하지 않은 doNext입니다."),
+    INVALID_DO_ELSE(false, 2057, "유효하지 않은 doElse입니다."),
+    EMPTY_DO_NAME(false, 2058, "doName을 입력하세요."),
+    INVALID_DO_NAME(false, 2059, "유효하지 않은 doName입니다."),
+    EXIST_DO_HABIT(false, 2060, "존재하는 DoHabit입니다."),
 
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
@@ -57,9 +70,13 @@ public enum BaseResponseStatus {
     INACTIVE_USER_IDENTITY_COLOR(false, 3026, "비활성화된 유저 정체성 컬러입니다."),
     FAILED_TO_EXIST_BY_USERINFO_AND_USERIDENTITYIDX_AND_STATUS(false, 3027, "userInfo,userIdentityIdx,status로 userIdentity 조회에 실패했습니다."),
     FAILED_TO_FIND_BY_USERIDENTITYIDX_AND_STATUS(false, 3028, "userIdentityIdx, status로 userIdentity 조회에 실패했습니다."),
-
-
-
+    FAILED_TO_SAVE_DO_HABIT(false, 3029, "DoHabit 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DO_ROUTINE(false, 3030, "DoRoutine 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DO_ENV(false, 3031, "DoEnv 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DO_NEXT(false, 3032, "DoNext 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DO_ELSE(false, 3033, "DoElse 저장에 실패했습니다."),
+    FAILED_TO_FIND_BY_DHIDX_AND_STATUS(false, 3034, "dhIdx, status로 DoHabit조회에 실패했습니다."),
+    FAILED_TO_EXIST_BY_USERINFO_AND_STATUS(false, 3035, "userInfo, status로 DoHabit 존재 여부 확인에 실패했습니다."),
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
     DATABASE_ERROR(false, 4001, "데이터베이스 연결에 실패하였습니다."),
