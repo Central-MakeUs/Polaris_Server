@@ -2,6 +2,8 @@ package com.example.dobit.src.doHabit;
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
+import com.example.dobit.src.doHabit.models.DoHabit;
+import com.example.dobit.src.doHabit.models.GetIdentityDoHabitRes;
 import com.example.dobit.src.doHabit.models.PostIdentityDoHabitReq;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
@@ -139,6 +141,52 @@ public class DoHabitController {
 
     }
 
+    /**
+     * 정체성별 Do 습관 조회하기 API
+     * [GET] /identity/:userIdentityIdx/dohabit/:dhIdx
+     * @PathVariable userIdentityIdx
+     * @return BaseResponse<GetIdentityDoHabitRes>
+     */
+    @ResponseBody
+    @GetMapping("/identity/{userIdentityIdx}/dohabit/{dhIdx}")
+    public BaseResponse<GetIdentityDoHabitRes> getIdentityDoHabit(@PathVariable Integer userIdentityIdx,@PathVariable Integer dhIdx) throws BaseException {
+
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+        if(userIdentity==null){
+            return new BaseResponse<>(INVALID_USER_IDENTITY);
+        }
+
+        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+        if (existUserIdentity == null){
+            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+        }
+
+        DoHabit doHabit = doHabitProvider.retrieveDoHabitByDhIdx(dhIdx);
+        if(doHabit==null){
+            return new BaseResponse<>(INVALID_DO_HABIT);
+        }
+
+
+
+        GetIdentityDoHabitRes getIdentityDoHabitRes;
+        try {
+            getIdentityDoHabitRes = doHabitProvider.retrieveIdentityDoHabit(doHabit);
+            return new BaseResponse<>(SUCCESS,getIdentityDoHabitRes);
+        }catch (Exception e){
+            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+        }
+    }
 
 
 //    /**

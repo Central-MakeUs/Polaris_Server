@@ -48,6 +48,7 @@ public enum BaseResponseStatus {
     EMPTY_DO_NAME(false, 2058, "doName을 입력하세요."),
     INVALID_DO_NAME(false, 2059, "유효하지 않은 doName입니다."),
     EXIST_DO_HABIT(false, 2060, "존재하는 DoHabit입니다."),
+    INVALID_DO_HABIT(false, 2061, "유효하지 않은 DoHabit입니다."),
 
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
@@ -77,6 +78,9 @@ public enum BaseResponseStatus {
     FAILED_TO_SAVE_DO_ELSE(false, 3033, "DoElse 저장에 실패했습니다."),
     FAILED_TO_FIND_BY_DHIDX_AND_STATUS(false, 3034, "dhIdx, status로 DoHabit조회에 실패했습니다."),
     FAILED_TO_EXIST_BY_USERINFO_AND_STATUS(false, 3035, "userInfo, status로 DoHabit 존재 여부 확인에 실패했습니다."),
+    FAILED_TO_FIND_BY_DOHABIT_AND_STATUS(false, 3036, "doHabit, status로 테이블 조회에 실패했습니다."),
+
+
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
     DATABASE_ERROR(false, 4001, "데이터베이스 연결에 실패하였습니다."),
