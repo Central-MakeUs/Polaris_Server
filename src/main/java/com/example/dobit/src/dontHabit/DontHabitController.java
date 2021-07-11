@@ -2,6 +2,10 @@ package com.example.dobit.src.dontHabit;
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
+import com.example.dobit.src.doHabit.models.DoHabit;
+import com.example.dobit.src.doHabit.models.GetIdentityDoHabitRes;
+import com.example.dobit.src.dontHabit.models.DontHabit;
+import com.example.dobit.src.dontHabit.models.GetIdentityDontHabitRes;
 import com.example.dobit.src.dontHabit.models.PostIdentityDontHabitReq;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
@@ -132,5 +136,54 @@ public class DontHabitController {
 
 
     }
+
+    /**
+     * 정체성별 Dont 습관 조회하기 API
+     * [GET] /donthabit/:dnhIdx
+     * @PathVariable dnhIdx
+     * @return BaseResponse<GetIdentityDontHabitRes>
+     */
+    @ResponseBody
+    @GetMapping("/donthabit/{dnhIdx}")
+    public BaseResponse<GetIdentityDontHabitRes> getIdentityDoHabit(@PathVariable Integer dnhIdx) throws BaseException {
+
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+//        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+//        if(userIdentity==null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY);
+//        }
+//
+//        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+//        if (existUserIdentity == null){
+//            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+//        }
+
+        DontHabit dontHabit = dontHabitProvider.retrieveDontHabitByDnhIdx(dnhIdx);
+        if(dontHabit==null){
+            return new BaseResponse<>(INVALID_DONT_HABIT);
+        }
+
+
+
+        GetIdentityDontHabitRes getIdentityDontHabitRes;
+        try {
+            getIdentityDontHabitRes = dontHabitProvider.retrieveIdentityDontHabit(dontHabit);
+            return new BaseResponse<>(SUCCESS,getIdentityDontHabitRes);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
 
 }

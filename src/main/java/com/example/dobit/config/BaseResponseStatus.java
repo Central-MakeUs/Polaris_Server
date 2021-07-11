@@ -59,6 +59,7 @@ public enum BaseResponseStatus {
     INVALID_DONT_ROUTINE(false, 2069, "유효하지 않은 dontRoutine입니다."),
     INVALID_DONT_MOTIVE(false, 2070, "유효하지 않은 dontMotive입니다."),
     INVALID_DONT_ELSE(false, 2071, "유효하지 않은 dontElse입니다."),
+    INVALID_DONT_HABIT(false, 2071, "유효하지 않은 dontHabit입니다."),
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
     NOT_FOUND_USER(false, 3010, "존재하지 않는 회원입니다."),
@@ -98,6 +99,8 @@ public enum BaseResponseStatus {
     FAILED_TO_SAVE_DONT_ROUTINE(false, 3044, "DontRoutine 저장에 실패했습니다."),
     FAILED_TO_SAVE_DONT_MOTIVE(false, 3045, "DontMotive 저장에 실패했습니다."),
     FAILED_TO_SAVE_DONT_ELSE(false, 3046, "DontElse 저장에 실패했습니다."),
+    FAILED_TO_FIND_BY_DONTHABIT_AND_STATUS(false, 3047, "dontHabit,status로 테이블 조회에 실패했습니다."),
+
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),

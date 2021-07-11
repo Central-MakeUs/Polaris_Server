@@ -184,8 +184,8 @@ public class DoHabitController {
         try {
             getIdentityDoHabitRes = doHabitProvider.retrieveIdentityDoHabit(doHabit);
             return new BaseResponse<>(SUCCESS,getIdentityDoHabitRes);
-        }catch (Exception e){
-            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
         }
     }
 
