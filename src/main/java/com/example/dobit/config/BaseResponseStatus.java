@@ -105,6 +105,8 @@ public enum BaseResponseStatus {
     FAILED_TO_DELETE_DONT_MOTIVE(false, 3048, "DontMotive 삭제에 실패했습니다."),
     FAILED_TO_DELETE_DONT_ELSE(false, 3049, "DontElse 삭제에 실패했습니다."),
     FAILED_TO_DELETE_DONT_ROUTINE(false, 3050, "DontRoutine 삭제에 실패했습니다."),
+    FAILED_TO_FIND_BY_USERIDENTITY_AND_STATUS(false, 3051, "userIdentity와 status로 테이블 조회에 실패했습니다."),
+
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
     DATABASE_ERROR(false, 4001, "데이터베이스 연결에 실패하였습니다."),

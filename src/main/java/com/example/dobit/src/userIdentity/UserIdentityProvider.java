@@ -1,11 +1,18 @@
 package com.example.dobit.src.userIdentity;
 
 import com.example.dobit.config.BaseException;
+import com.example.dobit.src.doHabit.DoHabitProvider;
+import com.example.dobit.src.doHabit.DoHabitRepository;
+import com.example.dobit.src.doHabit.models.DoHabit;
+import com.example.dobit.src.dontHabit.DontHabitProvider;
+import com.example.dobit.src.dontHabit.DontHabitRepository;
+import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.models.GetIdentityRes;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +24,8 @@ import static com.example.dobit.config.BaseResponseStatus.*;
 @RequiredArgsConstructor
 public class UserIdentityProvider {
     private final UserIdentityRepository userIdentityRepository;
-    private final UserInfoProvider userInfoProvider;
+    private final DoHabitRepository doHabitRepository;
+    private final DontHabitRepository dontHabitRepository;
 
     /**
      * idx로 유저정체성 조회하기
@@ -41,7 +49,7 @@ public class UserIdentityProvider {
      * @throws BaseException
      */
     public List<GetIdentityRes> retrieveIdentity(UserInfo userInfo) throws BaseException {
-        List<UserIdentity> userIdentityList ;
+        List<UserIdentity> userIdentityList;
         try {
             userIdentityList = userIdentityRepository.findByUserInfoAndStatus(userInfo,"ACTIVE");
         } catch (Exception ignored) {
@@ -54,10 +62,31 @@ public class UserIdentityProvider {
             String userIdentityName = userIdentityList.get(i).getUserIdentityName();
             Integer userIdentityColorIdx  = userIdentityList.get(i).getUserIdentityColor().getUserIdentityColorIdx();
             String userIdentityColorName = userIdentityList.get(i).getUserIdentityColor().getUserIdentityColorName();
-            String doHabit = null;
-            String doNotHabit = null;
 
-            GetIdentityRes getIdentityRes = new GetIdentityRes(userIdentityIdx, userIdentityName, userIdentityColorIdx, userIdentityColorName,doHabit, doNotHabit);
+            UserIdentity userIdentity = retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+            DoHabit doHabit;
+            try{
+                doHabit = doHabitRepository.findByUserIdentityAndStatus(userIdentity,"ACTIVE");
+            }catch (Exception e){
+                throw new BaseException(FAILED_TO_FIND_BY_USERIDENTITY_AND_STATUS);
+            }
+
+            DontHabit dontHabit;
+            try {
+                dontHabit = dontHabitRepository.findByUserIdentityAndStatus(userIdentity,"ACTIVE");
+            }catch (Exception e){
+                throw new BaseException(FAILED_TO_FIND_BY_USERIDENTITY_AND_STATUS);
+            }
+            String doHabitName = null;
+            if(doHabit!=null) {
+                doHabitName = doHabit.getDhName();
+            }
+            String dontHabitName = null;
+            if(dontHabit!=null){
+                dontHabitName = dontHabit.getDnhName();
+            }
+
+            GetIdentityRes getIdentityRes = new GetIdentityRes(userIdentityIdx, userIdentityName, userIdentityColorIdx, userIdentityColorName,doHabitName, dontHabitName);
             getIdentityResList.add(getIdentityRes);
         }
         return getIdentityResList;

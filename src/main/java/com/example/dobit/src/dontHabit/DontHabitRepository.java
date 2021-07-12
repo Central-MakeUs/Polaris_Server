@@ -12,5 +12,7 @@ public interface DontHabitRepository extends CrudRepository<DontHabit, Integer> 
     Boolean existsByUserIdentityAndStatus(UserIdentity userIdentity, String active);
 
     DontHabit findByDnhIdxAndStatus(Integer dnhIdx, String active);
+
+    DontHabit findByUserIdentityAndStatus(UserIdentity userIdentity, String active);
 }
  
