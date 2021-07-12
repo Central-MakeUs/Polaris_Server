@@ -1,12 +1,6 @@
 package com.example.dobit.src.dontHabit;
 
 import com.example.dobit.config.BaseException;
-import com.example.dobit.src.doElse.models.DoElse;
-import com.example.dobit.src.doEnv.models.DoEnv;
-import com.example.dobit.src.doHabit.models.DoHabit;
-import com.example.dobit.src.doHabit.models.GetIdentityDoHabitRes;
-import com.example.dobit.src.doNext.models.DoNext;
-import com.example.dobit.src.doRoutine.models.DoRoutine;
 import com.example.dobit.src.dontElse.DontElseRepository;
 import com.example.dobit.src.dontElse.models.DontElse;
 import com.example.dobit.src.dontHabit.models.DontHabit;
@@ -23,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.dobit.config.BaseResponseStatus.*;
-import static com.example.dobit.config.BaseResponseStatus.FAILED_TO_FIND_BY_DOHABIT_AND_STATUS;
 
 @Service
 @RequiredArgsConstructor

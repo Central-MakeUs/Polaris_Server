@@ -2,9 +2,6 @@ package com.example.dobit.src.dontHabit;
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
-import com.example.dobit.src.doHabit.models.DoHabit;
-import com.example.dobit.src.doHabit.models.GetIdentityDoHabitRes;
-import com.example.dobit.src.doHabit.models.PatchIdentityDoHabitReq;
 import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.dontHabit.models.GetIdentityDontHabitRes;
 import com.example.dobit.src.dontHabit.models.PatchIdentityDontHabitReq;
@@ -27,7 +24,6 @@ import static com.example.dobit.config.BaseResponseStatus.*;
 public class DontHabitController {
     private final DontHabitProvider dontHabitProvider;
     private final DontHabitService dontHabitService;
-    private final DontHabitRepository dontHabitRepository;
     private final JwtService jwtService;
     private final UserInfoProvider userInfoProvider;
     private final UserIdentityProvider userIdentityProvider;
@@ -35,7 +31,7 @@ public class DontHabitController {
 
     /**
      * 정체성별 Dont 습관 입력하기 API
-     * [POST] /identity/:userIdentityIdx/donothabit
+     * [POST] /identity/:userIdentityIdx/donthabit
      * @PathVariable userIdentityIdx
      * @RequestBody PostIdentityDontHabitReq
      * @return BaseResponse<Void>
@@ -196,7 +192,7 @@ public class DontHabitController {
      * @return BaseResponse<Void>
      */
     @ResponseBody
-    @PatchMapping("/donthabit/:dnhIdx")
+    @PatchMapping("/donthabit/{dnhIdx}")
     public BaseResponse<Void> patchIdentityDontHabit(@PathVariable Integer dnhIdx,  @RequestBody PatchIdentityDontHabitReq patchIdentityDontHabitReq) throws BaseException {
 
         Integer jwtUserIdx;

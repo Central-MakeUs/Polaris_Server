@@ -2,7 +2,6 @@ package com.example.dobit.src.doElse.models;
 
 import com.example.dobit.config.BaseEntity;
 import com.example.dobit.src.doHabit.models.DoHabit;
-import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -6,7 +6,6 @@ import com.example.dobit.src.doEnv.models.DoEnv;
 import com.example.dobit.src.doNext.models.DoNext;
 import com.example.dobit.src.doRoutine.models.DoRoutine;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
-import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
