@@ -65,6 +65,31 @@ public class UserInfoService {
 
 
     /**
+     * 로그인 API
+     * @param postLoginReq
+     * @return PostLoginRes
+     * @throws BaseException
+     */
+    public PostLoginRes login(PostLoginReq postLoginReq) throws BaseException {
+        UserInfo userInfo = userInfoProvider.retrieveUserInfoByEmail(postLoginReq.getEmail());
+
+        String password;
+        try {
+            password = new AES128(Secret.USER_INFO_PASSWORD_KEY).decrypt(userInfo.getPassword());
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_DECRYPT_PASSWORD);
+        }
+
+        if (!postLoginReq.getPassword().equals(password)) {
+            throw new BaseException(CHECK_YOUR_PASSWORD);
+        }
+
+        String jwt = jwtService.createJwt(userInfo.getUserIdx());
+
+        int userIdx = userInfo.getUserIdx();
+        return new PostLoginRes(userIdx, jwt);
+    }
+    /**
      * 유저 탈퇴 API
      * @param jwtUserIdx
      * @throws BaseException

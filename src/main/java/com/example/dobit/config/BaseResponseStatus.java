@@ -59,7 +59,9 @@ public enum BaseResponseStatus {
     INVALID_DONT_ROUTINE(false, 2069, "유효하지 않은 dontRoutine입니다."),
     INVALID_DONT_MOTIVE(false, 2070, "유효하지 않은 dontMotive입니다."),
     INVALID_DONT_ELSE(false, 2071, "유효하지 않은 dontElse입니다."),
-    INVALID_DONT_HABIT(false, 2071, "유효하지 않은 dontHabit입니다."),
+    INVALID_DONT_HABIT(false, 2072, "유효하지 않은 dontHabit입니다."),
+    NOT_EXIST_EMAIL(false, 2073, "이메일 주소를 확인해주세요."),
+    CHECK_YOUR_PASSWORD(false, 2074, "비밀번호를 확인해주세요."),
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
     NOT_FOUND_USER(false, 3010, "존재하지 않는 회원입니다."),

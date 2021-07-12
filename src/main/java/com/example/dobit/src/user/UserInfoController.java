@@ -92,16 +92,18 @@ public class UserInfoController {
             return new BaseResponse<>(INVALID_EMAIL);
         }
         boolean existEmail =  userInfoProvider.retrieveEmail(postLoginReq.getEmail());
-        if(existEmail){
-            return new BaseResponse<>(EXIST_EMAIL);
+        if(!existEmail){
+            return new BaseResponse<>(NOT_EXIST_EMAIL);
         }
 
         if (postLoginReq.getPassword() == null || postLoginReq.getPassword().length() == 0) {
             return new BaseResponse<>(EMPTY_PASSWORD);
         }
 
+
+
         try {
-            PostLoginRes postLoginRes = userInfoProvider.login(postLoginReq);
+            PostLoginRes postLoginRes = userInfoService.login(postLoginReq);
             return new BaseResponse<>(SUCCESS, postLoginRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
