@@ -11,6 +11,7 @@ import com.example.dobit.src.userIdentityColor.UserIdentityColorProvider;
 import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class UserIdentityService {
      * @return void
      * @throws BaseException
      */
+    @Transactional
     public void  createIdentity(UserInfo userInfo , PostIdentityReq postIdentityReq) throws BaseException {
         List<Integer> identityList = postIdentityReq.getIdentityList();
 
@@ -54,6 +56,7 @@ public class UserIdentityService {
      * @return void
      * @throws BaseException
      */
+    @Transactional
     public void createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         String identityName = postDirectIdentityReq.getIdentityName();
         UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(9); //black
