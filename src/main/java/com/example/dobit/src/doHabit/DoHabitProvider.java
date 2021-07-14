@@ -50,7 +50,7 @@ public class DoHabitProvider {
     }
 
     /**
-     * userIdentity로 DoHabit 조회
+     * userIdentity로 DoHabit 존재여부 조회
      * @param userIdentity
      * @return existDoHabit
      * @throws BaseException
@@ -65,6 +65,24 @@ public class DoHabitProvider {
 
         return existDoHabit;
     }
+
+    /**
+     * userIdentity로 DoHabit w조회
+     * @param userIdentity
+     * @return dohabit
+     * @throws BaseException
+     */
+    public DoHabit retrieveDoHabitByUserIdentity(UserIdentity userIdentity) throws BaseException {
+        DoHabit doHabit;
+        try {
+            doHabit = doHabitRepository.findByUserIdentityAndStatus(userIdentity,"ACTIVE");
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_FIND_BY_USERIDENTITY_AND_STATUS);
+        }
+
+        return doHabit;
+    }
+
 
     /**
      * 정체성별 Do 습관 조회하기 API

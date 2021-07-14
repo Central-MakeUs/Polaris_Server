@@ -1,18 +1,14 @@
 package com.example.dobit.src.userIdentity;
 
 import com.example.dobit.config.BaseException;
-import com.example.dobit.src.doHabit.DoHabitProvider;
 import com.example.dobit.src.doHabit.DoHabitRepository;
 import com.example.dobit.src.doHabit.models.DoHabit;
-import com.example.dobit.src.dontHabit.DontHabitProvider;
 import com.example.dobit.src.dontHabit.DontHabitRepository;
 import com.example.dobit.src.dontHabit.models.DontHabit;
-import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.models.GetIdentityRes;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -111,5 +107,18 @@ public class UserIdentityProvider {
 
         return existUserIdentity;
     }
+//
+//    /**
+//     * 유저로 유저정체성 조회
+//     * @param userInfo
+//     * @return UserIdentity
+//     * @throws BaseException
+//     */
+//    public UserIdentity retrieveUserIdentityByUserInfo(UserInfo userInfo) throws BaseException{
+//        UserIdentity userIdentity;
+//        try{
+//            userIdentity = userIdentityRepository.findByUserInfoAndStatus()
+//        }
+//    }
 
 }

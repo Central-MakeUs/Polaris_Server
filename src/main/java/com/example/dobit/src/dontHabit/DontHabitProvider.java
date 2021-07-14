@@ -27,23 +27,6 @@ public class DontHabitProvider {
     private final DontMotiveRepository dontMotiveRepository;
 
     /**
-     * userIdentity로 DontHabit 조회
-     * @param userIdentity
-     * @return existDontHabit
-     * @throws BaseException
-     */
-    public Boolean retrieveExistingDontHabitByUserIdentity(UserIdentity userIdentity) throws BaseException {
-        Boolean existDontHabit;
-        try {
-            existDontHabit = dontHabitRepository.existsByUserIdentityAndStatus(userIdentity,"ACTIVE");
-        } catch (Exception ignored) {
-            throw new BaseException(FAILED_TO_EXIST_BY_USERIDENTITY_AND_STATUS);
-        }
-
-        return existDontHabit;
-    }
-
-    /**
      * Idx로 DontHabit 조회
      * @param dnhIdx
      * @return DontHabit
@@ -60,6 +43,42 @@ public class DontHabitProvider {
 
         return dontHabit;
     }
+
+    /**
+     * userIdentity로 DontHabit 조회
+     * @param userIdentity
+     * @return existDontHabit
+     * @throws BaseException
+     */
+    public Boolean retrieveExistingDontHabitByUserIdentity(UserIdentity userIdentity) throws BaseException {
+        Boolean existDontHabit;
+        try {
+            existDontHabit = dontHabitRepository.existsByUserIdentityAndStatus(userIdentity,"ACTIVE");
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_EXIST_BY_USERIDENTITY_AND_STATUS);
+        }
+
+        return existDontHabit;
+    }
+
+
+    /**
+     * userIdentity로 DontHabit w조회
+     * @param userIdentity
+     * @return donthabit
+     * @throws BaseException
+     */
+    public DontHabit retrieveDontHabitByUserIdentity(UserIdentity userIdentity) throws BaseException {
+        DontHabit dontHabit;
+        try {
+            dontHabit = dontHabitRepository.findByUserIdentityAndStatus(userIdentity,"ACTIVE");
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_FIND_BY_USERIDENTITY_AND_STATUS);
+        }
+
+        return dontHabit;
+    }
+
 
     /**
      * 정체성별 Dont 습관 조회하기 API
