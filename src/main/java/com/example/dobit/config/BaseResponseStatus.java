@@ -82,7 +82,7 @@ public enum BaseResponseStatus {
     FAILED_TO_FIND_BY_IDENTITYIDX(false, 3021, "identityIdx로 목표(정체성) 조회에 실패했습니다."),
     INACTIVE_IDENTITY(false, 3022, "비활성화된 정체성입니다."),
     FAILED_TO_SAVE_USER_IDENTITY(false, 3023, "유저 정체성 저장에 실패했습니다."),
-    FAILED_TO_FIND_BY_USERINFO_AND_STATUS(false, 3024, "userInfo, status로 유저 정체성 저장에 실패했습니다."),
+    FAILED_TO_FIND_BY_USERINFO_AND_STATUS(false, 3024, "userInfo, status로 유저 정체성 조회에 실패했습니다."),
     FAILED_TO_FIND_BY_USER_IDENTITY_COLORIDX(false, 3025, "userIdentityColorIdx로 유저정체성컬러 조회에 실패했습니다."),
     INACTIVE_USER_IDENTITY_COLOR(false, 3026, "비활성화된 유저 정체성 컬러입니다."),
     FAILED_TO_EXIST_BY_USERINFO_AND_USERIDENTITYIDX_AND_STATUS(false, 3027, "userInfo,userIdentityIdx,status로 userIdentity 조회에 실패했습니다."),
@@ -116,8 +116,8 @@ public enum BaseResponseStatus {
     FAIED_TO_EXIST_BY_USERINFO_AND_DONTHABIT_AND_STATUS(false, 3055, "userInfo,doHabit,status로 DontHabitCheck 존재여부 조회에 실패했습니다."),
     FAILED_TO_FIND_BY_USERINFO_AND_DOHABIT_AND_DATE_AND_STATUS(false, 3056, "userInfo,doHabit,year,month,day,status로 DoHabitCheck 조회에 실패했습니다."),
     FAILED_TO_FIND_BY_USERINFO_AND_DONTHABIT_AND_DATE_AND_STATUS(false, 3057, "userInfo,doHabit,year,month,day,status로 DontHabitCheck 조회에 실패했습니다."),
-    FAIED_TO_EXIST_BY_USERINFO_AND_DOHABIT_AND_DATE_AND_STATUS(false, 3058, "userInfo,doHabit,year,month,day,status로 DoHabitCheck 조회에 실패했습니다."),
-    FAIED_TO_EXIST_BY_USERINFO_AND_DONTHABIT_AND_DATE_AND_STATUS(false, 3059, "userInfo,dontHabit,year,month,day,status로 DontHabitCheck 조회에 실패했습니다."),
+    FAIED_TO_EXIST_BY_USERINFO_AND_DOHABIT_AND_DATE_AND_STATUS(false, 3058, "userInfo,doHabit,year,month,day,status로 DoHabitCheck 존재여부 조회에 실패했습니다."),
+    FAIED_TO_EXIST_BY_USERINFO_AND_DONTHABIT_AND_DATE_AND_STATUS(false, 3059, "userInfo,dontHabit,year,month,day,status로 DontHabitCheck 존재여부 조회에 실패했습니다."),
     FAILED_TO_FIND_BY_USERINFO_AND_USERIDENTITY_AND_DATE_AND_STATUS(false, 3060, "userInfo,userIdentity,year,month,status로 테이블 조회에 실패했습니다."),
 
     // 4000 : Database 오류

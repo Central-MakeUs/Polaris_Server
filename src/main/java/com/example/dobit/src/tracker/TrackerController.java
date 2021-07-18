@@ -25,8 +25,8 @@ public class TrackerController {
 
     /**
      * 트래커 조회하기 API
-     * [GET] /tracker?userIdentity=1&month=1
-     * @RequestParam userIdentity , month
+     * [GET] /tracker?userIdentityIdx=1&year=2021&month=7
+     * @RequestParam userIdentity, year, month
      * @return GetTrackerRes
      */
 

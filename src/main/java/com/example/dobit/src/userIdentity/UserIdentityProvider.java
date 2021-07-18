@@ -102,6 +102,7 @@ public class UserIdentityProvider {
      */
     public GetIdentityRes retrieveIdentity(UserIdentity userIdentity) throws BaseException {
         int userIdentityIdx = userIdentity.getUserIdentityIdx();
+        String userIdentityName = userIdentity.getUserIdentityName();
         DoHabit doHabit = doHabitProvider.retrieveDoHabitByUserIdentity(userIdentity);
         int doHabitIdx = doHabit.getDhIdx();
         String doHabitName = doHabit.getDhName();
@@ -111,7 +112,7 @@ public class UserIdentityProvider {
         int userIdentityColorIdx = userIdentity.getUserIdentityColor().getUserIdentityColorIdx();
         String userIdentityColorName = userIdentity.getUserIdentityColor().getUserIdentityColorName();
 
-        return new GetIdentityRes(userIdentityIdx,doHabitIdx,doHabitName,dontHabitIdx,dontHabitName,userIdentityColorIdx,userIdentityColorName);
+        return new GetIdentityRes(userIdentityIdx,userIdentityName,doHabitIdx,doHabitName,dontHabitIdx,dontHabitName,userIdentityColorIdx,userIdentityColorName);
 
     }
 

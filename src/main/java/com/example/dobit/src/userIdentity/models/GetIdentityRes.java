@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class GetIdentityRes {
     private final int userIdentityIdx;
+    private final String userIdentityName;
     private final int doHabitIdx;
     private final String doHabitName;
     private final int dontHabitIdx;
