@@ -1,17 +1,19 @@
 package com.example.dobit.src.dontHabitCheck;
 
 import com.example.dobit.config.BaseException;
+import com.example.dobit.src.doHabitCheck.models.DoHabitCheck;
 import com.example.dobit.src.dontHabit.DontHabitProvider;
 import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.dontHabitCheck.models.DontHabitCheck;
 import com.example.dobit.src.user.models.UserInfo;
+import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.List;
 
-import static com.example.dobit.config.BaseResponseStatus.FAIED_TO_EXIST_BY_USERINFO_AND_DONTHABIT_AND_DATE_AND_STATUS;
-import static com.example.dobit.config.BaseResponseStatus.FAILED_TO_FIND_BY_USERINFO_AND_DONTHABIT_AND_DATE_AND_STATUS;
+import static com.example.dobit.config.BaseResponseStatus.*;
 
 
 @Service
@@ -61,4 +63,22 @@ public class DontHabitCheckProvider {
         }
         return dontHabitCheck;
     }
+
+    /**
+     * userInfo, userIdentity로 DontHabitCheck 리스트 조회
+     * @param userInfo, dontHabit
+     * @return List<DontHabitCheck>
+     * @throws BaseException
+     */
+    public List<DontHabitCheck> retrieveDontHabitCheckByUserInfoAndUserIdentityAndYearAndMonth(UserInfo userInfo, UserIdentity userIdentity,
+                                                                                           int year, int month) throws BaseException{
+        List<DontHabitCheck> dontHabitChecks;
+        try {
+            dontHabitChecks = dontHabitCheckRepository.findByUserInfoAndUserIdentityAndYearAndMonthAndStatus(userInfo,userIdentity,year,month,"ACTIVE");
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_FIND_BY_USERINFO_AND_USERIDENTITY_AND_DATE_AND_STATUS);
+        }
+        return dontHabitChecks;
+    }
+
 }

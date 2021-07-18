@@ -118,6 +118,8 @@ public enum BaseResponseStatus {
     FAILED_TO_FIND_BY_USERINFO_AND_DONTHABIT_AND_DATE_AND_STATUS(false, 3057, "userInfo,doHabit,year,month,day,status로 DontHabitCheck 조회에 실패했습니다."),
     FAIED_TO_EXIST_BY_USERINFO_AND_DOHABIT_AND_DATE_AND_STATUS(false, 3058, "userInfo,doHabit,year,month,day,status로 DoHabitCheck 조회에 실패했습니다."),
     FAIED_TO_EXIST_BY_USERINFO_AND_DONTHABIT_AND_DATE_AND_STATUS(false, 3059, "userInfo,dontHabit,year,month,day,status로 DontHabitCheck 조회에 실패했습니다."),
+    FAILED_TO_FIND_BY_USERINFO_AND_USERIDENTITY_AND_DATE_AND_STATUS(false, 3060, "userInfo,userIdentity,year,month,status로 테이블 조회에 실패했습니다."),
+
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
     DATABASE_ERROR(false, 4001, "데이터베이스 연결에 실패하였습니다."),
