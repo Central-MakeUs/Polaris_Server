@@ -1,11 +1,14 @@
 package com.example.dobit.src.userIdentity;
 
 import com.example.dobit.config.BaseException;
+import com.example.dobit.src.doHabit.DoHabitProvider;
 import com.example.dobit.src.doHabit.DoHabitRepository;
 import com.example.dobit.src.doHabit.models.DoHabit;
+import com.example.dobit.src.dontHabit.DontHabitProvider;
 import com.example.dobit.src.dontHabit.DontHabitRepository;
 import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.user.models.UserInfo;
+import com.example.dobit.src.userIdentity.models.GetIdentitiesRes;
 import com.example.dobit.src.userIdentity.models.GetIdentityRes;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,8 @@ public class UserIdentityProvider {
     private final UserIdentityRepository userIdentityRepository;
     private final DoHabitRepository doHabitRepository;
     private final DontHabitRepository dontHabitRepository;
+    private final DoHabitProvider doHabitProvider;
+    private final DontHabitProvider dontHabitProvider;
 
     /**
      * idx로 유저정체성 조회하기
@@ -41,10 +46,10 @@ public class UserIdentityProvider {
     /**
      * 정체성 조회하기 API
      * @param userInfo
-     * @return List<GetIdentityRes>
+     * @return List<GetIdentitiesRes>
      * @throws BaseException
      */
-    public List<GetIdentityRes> retrieveIdentity(UserInfo userInfo) throws BaseException {
+    public List<GetIdentitiesRes> retrieveIdentities(UserInfo userInfo) throws BaseException {
         List<UserIdentity> userIdentityList;
         try {
             userIdentityList = userIdentityRepository.findByUserInfoAndStatus(userInfo,"ACTIVE");
@@ -52,7 +57,7 @@ public class UserIdentityProvider {
             throw new BaseException(FAILED_TO_FIND_BY_USERINFO_AND_STATUS);
         }
 
-        List<GetIdentityRes> getIdentityResList = new ArrayList<>();
+        List<GetIdentitiesRes> getIdentitiesResList = new ArrayList<>();
         for(int i=0;i<userIdentityList.size();i++){
             Integer userIdentityIdx = userIdentityList.get(i).getUserIdentityIdx();
             String userIdentityName = userIdentityList.get(i).getUserIdentityName();
@@ -82,10 +87,31 @@ public class UserIdentityProvider {
                 dontHabitName = dontHabit.getDnhName();
             }
 
-            GetIdentityRes getIdentityRes = new GetIdentityRes(userIdentityIdx, userIdentityName, userIdentityColorIdx, userIdentityColorName,doHabitName, dontHabitName);
-            getIdentityResList.add(getIdentityRes);
+            GetIdentitiesRes getIdentitiesRes = new GetIdentitiesRes(userIdentityIdx, userIdentityName, userIdentityColorIdx, userIdentityColorName,doHabitName, dontHabitName);
+            getIdentitiesResList.add(getIdentitiesRes);
         }
-        return getIdentityResList;
+        return getIdentitiesResList;
+
+    }
+
+    /**
+     * 정체성 상세 조회하기 API
+     * @param userIdentity
+     * @return List<GetIdentitiesRes>
+     * @throws BaseException
+     */
+    public GetIdentityRes retrieveIdentity(UserIdentity userIdentity) throws BaseException {
+        int userIdentityIdx = userIdentity.getUserIdentityIdx();
+        DoHabit doHabit = doHabitProvider.retrieveDoHabitByUserIdentity(userIdentity);
+        int doHabitIdx = doHabit.getDhIdx();
+        String doHabitName = doHabit.getDhName();
+        DontHabit dontHabit = dontHabitProvider.retrieveDontHabitByUserIdentity(userIdentity);
+        int dontHabitIdx = dontHabit.getDnhIdx();
+        String dontHabitName = dontHabit.getDnhName();
+        int userIdentityColorIdx = userIdentity.getUserIdentityColor().getUserIdentityColorIdx();
+        String userIdentityColorName = userIdentity.getUserIdentityColor().getUserIdentityColorName();
+
+        return new GetIdentityRes(userIdentityIdx,doHabitIdx,doHabitName,dontHabitIdx,dontHabitName,userIdentityColorIdx,userIdentityColorName);
 
     }
 

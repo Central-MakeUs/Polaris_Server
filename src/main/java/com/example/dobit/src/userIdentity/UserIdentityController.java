@@ -120,11 +120,11 @@ public class UserIdentityController {
     /**
      * 정체성 조회하기 API
      * [POST] /identity
-     * @return BaseResponse<GetIdentityRes>
+     * @return BaseResponse<GetIdentitiesRes>
      */
     @ResponseBody
     @GetMapping("/identity")
-    public BaseResponse<List<GetIdentityRes>> getIdentity() throws BaseException {
+    public BaseResponse<List<GetIdentitiesRes>> getIdentities() throws BaseException {
         Integer jwtUserIdx;
         try {
             jwtUserIdx = jwtService.getUserIdx();
@@ -138,8 +138,47 @@ public class UserIdentityController {
         }
 
         try {
-            List<GetIdentityRes> getIdentityResList = userIdentityProvider.retrieveIdentity(userInfo);
-            return new BaseResponse<>(SUCCESS,getIdentityResList);
+            List<GetIdentitiesRes> getIdentitiesResList = userIdentityProvider.retrieveIdentities(userInfo);
+            return new BaseResponse<>(SUCCESS, getIdentitiesResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+    /**
+     * 정체성 상세 조회하기 API
+     * [POST] /identity/:userIdentityIdx
+     * @return BaseResponse<GetIdentitiesRes>
+     */
+    @ResponseBody
+    @GetMapping("/identity/{userIdentityIdx}")
+    public BaseResponse<GetIdentityRes> getIdentity(@PathVariable int userIdentityIdx) throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+        if(userIdentity==null){
+            return new BaseResponse<>(INVALID_USER_IDENTITY);
+        }
+
+        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+        if (existUserIdentity == null){
+            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+        }
+
+        try {
+            GetIdentityRes getIdentityRes = userIdentityProvider.retrieveIdentity(userIdentity);
+            return new BaseResponse<>(SUCCESS, getIdentityRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

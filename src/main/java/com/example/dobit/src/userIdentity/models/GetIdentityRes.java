@@ -6,10 +6,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetIdentityRes {
-    private final Integer userIdentityIdx;
-    private final String userIdentityName;
-    private final Integer userIdentityColorIdx;
+    private final int userIdentityIdx;
+    private final int doHabitIdx;
+    private final String doHabitName;
+    private final int dontHabitIdx;
+    private final String dontHabitName;
+    private final int userIdentityColorIdx;
     private final String userIdentityColorName;
-    private final String doHabit;
-    private final String doNotHabit;
 }

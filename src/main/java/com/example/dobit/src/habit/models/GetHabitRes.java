@@ -12,7 +12,9 @@ public class GetHabitRes {
     private final Integer doHabitIdx;
     private final String doHabitName;
     private final String doHabitSummary;
+    private final String isDoHabitCheck;
     private final Integer dontHabitIdx;
     private final String dontHabitName;
     private final String dontHabitSummary;
+    private final String isDontHabitCheck;
 }
