@@ -1,6 +1,8 @@
 package com.example.dobit.src.user.models;
 
 import com.example.dobit.config.BaseEntity;
+import com.example.dobit.src.dontHabitCheck.models.DontHabitCheck;
+import com.example.dobit.src.dontMotive.models.DontMotive;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.*;
 
@@ -50,6 +52,10 @@ public class UserInfo extends BaseEntity {
 
     @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
     private List<UserIdentity> userIdentities = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL)
+    private List<DontHabitCheck> dontHabitChecks = new ArrayList<>();
 
     public UserInfo(String email, String password, String nickname) {
         this.email = email;

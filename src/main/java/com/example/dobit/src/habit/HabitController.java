@@ -17,10 +17,10 @@ import static com.example.dobit.config.BaseResponseStatus.*;
 @RequiredArgsConstructor
 @RequestMapping
 public class HabitController {
-
     private final JwtService jwtService;
     private final UserInfoProvider userInfoProvider;
     private final HabitProvider habitProvider;
+
     /**
      * 습관 조회하기 API
      * [GET] /habit
@@ -52,5 +52,6 @@ public class HabitController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
 
 }

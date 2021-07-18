@@ -62,6 +62,10 @@ public enum BaseResponseStatus {
     INVALID_DONT_HABIT(false, 2072, "유효하지 않은 dontHabit입니다."),
     NOT_EXIST_EMAIL(false, 2073, "이메일 주소를 확인해주세요."),
     CHECK_YOUR_PASSWORD(false, 2074, "비밀번호를 확인해주세요."),
+    EMPTY_HABIT_CHECK(false, 2075, "습관 체크리스트를 입력하세요."),
+    EMPTY_DOHABITIDX(false, 2076, "doHabitIdx를 입력하세요."),
+    EMPTY_DONTHABITIDX(false, 2077, "dontHabitIdx를 입력하세요."),
+
     // 3000 : Response 오류
     RESPONSE_ERROR(false, 3000, "값을 불러오는데 실패하였습니다."),
     NOT_FOUND_USER(false, 3010, "존재하지 않는 회원입니다."),
@@ -106,6 +110,12 @@ public enum BaseResponseStatus {
     FAILED_TO_DELETE_DONT_ELSE(false, 3049, "DontElse 삭제에 실패했습니다."),
     FAILED_TO_DELETE_DONT_ROUTINE(false, 3050, "DontRoutine 삭제에 실패했습니다."),
     FAILED_TO_FIND_BY_USERIDENTITY_AND_STATUS(false, 3051, "userIdentity와 status로 테이블 조회에 실패했습니다."),
+    FAILED_TO_SAVE_DO_HABIT_CHECK(false, 3052, "DoHabitCheck 저장에 실패했습니다."),
+    FAILED_TO_SAVE_DONT_HABIT_CHECK(false, 3053, "DontHabitCheck 저장에 실패했습니다."),
+    FAIED_TO_EXIST_BY_USERINFO_AND_DOHABIT_AND_STATUS(false, 3054, "userInfo,doHabit,status로 DoHabitCheck 존재여부 조회에 실패했습니다."),
+    FAIED_TO_EXIST_BY_USERINFO_AND_DONTHABIT_AND_STATUS(false, 3055, "userInfo,doHabit,status로 DontHabitCheck 존재여부 조회에 실패했습니다."),
+    FAILED_TO_FIND_BY_USERINFO_AND_DOHABIT_AND_STATUS(false, 3056, "userInfo,doHabit,status로 DoHabitCheck 조회에 실패했습니다."),
+    FAILED_TO_FIND_BY_USERINFO_AND_DONTHABIT_AND_STATUS(false, 3057, "userInfo,doHabit,status로 DontHabitCheck 조회에 실패했습니다."),
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
