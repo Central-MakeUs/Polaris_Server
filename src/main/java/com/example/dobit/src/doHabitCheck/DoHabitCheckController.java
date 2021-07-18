@@ -57,7 +57,10 @@ public class DoHabitCheckController {
         if(doHabit ==null){
             return new BaseResponse<>(INVALID_DO_HABIT);
         }
-        Boolean existDoHabitCheck = doHabitCheckProvider.retrieveExistingDoHabitCheck(userInfo,doHabit);
+
+
+        // 현재날짜에 체크한 게있다면
+        Boolean existDoHabitCheck = doHabitCheckProvider.retrieveExistingDoHabitCheckToCurrentDate(userInfo,doHabit);
         try {
             if(existDoHabitCheck){
                 doHabitCheckService.deleteDoHabitCheck(userInfo,doHabit);

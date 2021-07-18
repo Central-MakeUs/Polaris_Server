@@ -7,6 +7,8 @@ import com.example.dobit.src.user.models.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+
 import static com.example.dobit.config.BaseResponseStatus.FAILED_TO_SAVE_DO_HABIT_CHECK;
 
 @Service
@@ -22,7 +24,12 @@ public class DoHabitCheckService {
      * @throws BaseException
      */
     public void createDoHabitCheck(UserInfo userInfo, DoHabit doHabit) throws BaseException {
-        DoHabitCheck doHabitCheck = new DoHabitCheck(doHabit,userInfo);
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        DoHabitCheck doHabitCheck = new DoHabitCheck(doHabit,userInfo,doHabit.getUserIdentity(),year,month,day);
         try {
             doHabitCheckRepository.save(doHabitCheck);
         }catch (Exception e){
@@ -38,7 +45,7 @@ public class DoHabitCheckService {
      * @throws BaseException
      */
     public void deleteDoHabitCheck(UserInfo userInfo, DoHabit doHabit) throws BaseException {
-        DoHabitCheck doHabitCheck =doHabitCheckProvider.retrieveDoHabitCheckByUserInfoAndDoHabit(userInfo,doHabit);
+        DoHabitCheck doHabitCheck =doHabitCheckProvider.retrieveDoHabitCheckByUserInfoAndDoHabitToCurrentDate(userInfo,doHabit);
         doHabitCheck.setStatus("INACTIVE");
         try {
             doHabitCheckRepository.save(doHabitCheck);

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DontHabitCheckRepository extends CrudRepository<DontHabitCheck, Integer> {
 
-    Boolean existsByUserInfoAndDontHabitAndStatus(UserInfo userInfo, DontHabit dontHabit, String active);
+    Boolean existsByUserInfoAndDontHabitAndYearAndMonthAndDayAndStatus(UserInfo userInfo, DontHabit dontHabit, int year, int month, int day, String active);
 
-    DontHabitCheck findByUserInfoAndDontHabitAndStatus(UserInfo userInfo, DontHabit dontHabit, String active);
+    DontHabitCheck findByUserInfoAndDontHabitAndYearAndMonthAndDayAndStatus(UserInfo userInfo, DontHabit dontHabit, int year, int month, int day, String active);
 }

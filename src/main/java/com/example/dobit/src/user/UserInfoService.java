@@ -84,10 +84,12 @@ public class UserInfoService {
             throw new BaseException(CHECK_YOUR_PASSWORD);
         }
 
+        String nickname = userInfo.getNickname();
         String jwt = jwtService.createJwt(userInfo.getUserIdx());
 
+
         int userIdx = userInfo.getUserIdx();
-        return new PostLoginRes(userIdx, jwt);
+        return new PostLoginRes(userIdx,nickname, jwt);
     }
     /**
      * 유저 탈퇴 API

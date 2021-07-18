@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Calendar;
+
 import static com.example.dobit.config.BaseResponseStatus.*;
 import static com.example.dobit.utils.ValidationRegex.*;
 
@@ -27,9 +29,13 @@ public class UserInfoController {
      * test
      */
     @ResponseBody
-    @GetMapping("/users/test")
+    @GetMapping("/test")
     public BaseResponse<Void> getTest() {
-            System.out.println("test");
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+            System.out.println("year"+year+"month"+month+"day"+day);
             return new BaseResponse<>(BaseResponseStatus.SUCCESS);
     }
 

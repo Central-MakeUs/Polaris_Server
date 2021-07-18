@@ -58,7 +58,7 @@ public class DontHabitCheckController {
         if(dontHabit ==null){
             return new BaseResponse<>(INVALID_DONT_HABIT);
         }
-        Boolean existDontHabitCheck = dontHabitCheckProvider.retrieveExistingDontHabitCheck(userInfo,dontHabit);
+        Boolean existDontHabitCheck = dontHabitCheckProvider.retrieveExistingDontHabitCheckToCurrentDate(userInfo,dontHabit);
         try {
             if(existDontHabitCheck){
                 dontHabitCheckService.deleteDontHabitCheck(userInfo,dontHabit);
