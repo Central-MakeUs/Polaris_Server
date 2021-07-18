@@ -1,6 +1,7 @@
 package com.example.dobit.src.dontHabit;
 
 import com.example.dobit.config.BaseException;
+import com.example.dobit.src.doHabit.models.DoHabit;
 import com.example.dobit.src.dontElse.DontElseRepository;
 import com.example.dobit.src.dontElse.models.DontElse;
 import com.example.dobit.src.dontHabit.models.DontHabit;
@@ -201,6 +202,25 @@ public class DontHabitService {
         }
 
 
+    }
+
+
+
+    /**
+     * 정체성별 dont 습관 삭제하기 API
+     * @param dontHabit
+     * @return void
+     * @throws BaseException
+     */
+    public void updateDontHabitStatus(DontHabit dontHabit) throws BaseException{
+
+        dontHabit.setStatus("INACTIVE");
+
+        try{
+            dontHabitRepository.save(dontHabit);
+        }catch (Exception exception){
+            throw new BaseException(FAILED_TO_SAVE_DONT_HABIT);
+        }
     }
 
 }

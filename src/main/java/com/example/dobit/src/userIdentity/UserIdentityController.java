@@ -150,6 +150,7 @@ public class UserIdentityController {
     /**
      * 정체성 삭제하기 API
      * [PATCH] /identity/:userIdentityIdx/status
+     * @PathVariable userIdentityIdx
      * @return BaseResponse<Void>
      */
     @ResponseBody
@@ -188,6 +189,8 @@ public class UserIdentityController {
     /**
      * 정체성 컬러 수정하기 API
      * [PATCH] /identity/:userIdentityIdx/color
+     * @PathVariable userIdentityIdx
+     * @RequestBody patchIdentityColorReq
      * @return BaseResponse<Void>
      */
     @ResponseBody

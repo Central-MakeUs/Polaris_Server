@@ -310,5 +310,39 @@ public class DoHabitController {
 
     }
 
+    /**
+     * 정체성별 do 습관 삭제하기 API
+     * [PATCH] /dohabit/:dhIdx/status
+     * @PathVariable dhIdx
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PatchMapping("/dohabit/{dhIdx}/status")
+    public BaseResponse<Void> patchDoHabitStatus(@PathVariable Integer dhIdx) throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        DoHabit doHabit = doHabitProvider.retrieveDoHabitByDhIdx(dhIdx);
+        if(doHabit == null){
+            return new BaseResponse<>(INVALID_DO_HABIT);
+        }
+
+        try {
+            doHabitService.updateDoHabitStatus(doHabit);
+            return new BaseResponse<>(SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
 
 }

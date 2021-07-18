@@ -245,4 +245,23 @@ public class DoHabitService {
 
     }
 
+
+    /**
+     * 정체성별 do 습관 삭제하기 API
+     * @param doHabit
+     * @return void
+     * @throws BaseException
+     */
+    public void updateDoHabitStatus(DoHabit doHabit) throws BaseException{
+
+        doHabit.setStatus("INACTIVE");
+
+        try{
+            doHabitRepository.save(doHabit);
+        }catch (Exception exception){
+            throw new BaseException(FAILED_TO_SAVE_DO_HABIT);
+        }
+    }
+
+
 }

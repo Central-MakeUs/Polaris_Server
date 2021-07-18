@@ -2,6 +2,7 @@ package com.example.dobit.src.dontHabit;
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
+import com.example.dobit.src.doHabit.models.DoHabit;
 import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.dontHabit.models.GetIdentityDontHabitRes;
 import com.example.dobit.src.dontHabit.models.PatchIdentityDontHabitReq;
@@ -288,6 +289,40 @@ public class DontHabitController {
             return new BaseResponse<>(exception.getStatus());
         }
 
+
+    }
+
+    /**
+     * 정체성별 dont 습관 삭제하기 API
+     * [PATCH] /donthabit/:dnhIdx/status
+     * @PathVariable dnhIdx
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PatchMapping("/donthabit/{dnhIdx}/status")
+    public BaseResponse<Void> patchDontHabitStatus(@PathVariable Integer dnhIdx) throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+        DontHabit dontHabit = dontHabitProvider.retrieveDontHabitByDnhIdx(dnhIdx);
+        if(dontHabit == null){
+            return new BaseResponse<>(INVALID_DONT_HABIT);
+        }
+
+        try {
+            dontHabitService.updateDontHabitStatus(dontHabit);
+            return new BaseResponse<>(SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
 
     }
 }
