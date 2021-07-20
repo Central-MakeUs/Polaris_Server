@@ -25,58 +25,18 @@ public class TrackerController {
     private final TrackerProvider trackerProvider;
     private final UserIdentityProvider userIdentityProvider;
 
-    /**
-     * 트래커 조회하기 API
-     * [GET] /tracker?userIdentityIdx=1&year=2021&month=7
-     * @RequestParam userIdentity, year, month
-     * @return GetTrackerRes
-     */
-
-    @ResponseBody
-    @GetMapping("/tracker")
-    public BaseResponse<GetTrackerRes> getTrackerRes(@RequestParam(value="userIdentityIdx") int userIdentityIdx,
-                                                     @RequestParam(value ="year") int year,
-                                                     @RequestParam(value="month") int month) throws BaseException{
-        Integer jwtUserIdx;
-        try {
-            jwtUserIdx = jwtService.getUserIdx();
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-
-        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
-        if(userInfo == null){
-            return new BaseResponse<>(INVALID_USER);
-        }
-        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
-        if(userIdentity==null){
-            return new BaseResponse<>(INVALID_USER_IDENTITY);
-        }
-
-        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
-        if (existUserIdentity == null){
-            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
-        }
-
-        try {
-            GetTrackerRes getTrackerRes = trackerProvider.retreiveTracker(userIdentity,year,month,userInfo);
-            return new BaseResponse<>(SUCCESS, getTrackerRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
-
 //    /**
-//     * 트래커 조회하기 API
-//     * [GET] /tracker?year=2021&month=7
-//     * @RequestParam year, month
+//     * 트래커 조회하기 API - 하나만 조회
+//     * [GET] /tracker?userIdentityIdx=1&year=2021&month=7
+//     * @RequestParam userIdentity, year, month
 //     * @return GetTrackerRes
 //     */
 //
 //    @ResponseBody
 //    @GetMapping("/tracker")
-//    public BaseResponse<List<GetTrackerRes>> getTrackerRes(@RequestParam(value ="year") int year,
-//                                                           @RequestParam(value="month") int month) throws BaseException{
+//    public BaseResponse<GetTrackerRes> getTrackerRes(@RequestParam(value="userIdentityIdx") int userIdentityIdx,
+//                                                     @RequestParam(value ="year") int year,
+//                                                     @RequestParam(value="month") int month) throws BaseException{
 //        Integer jwtUserIdx;
 //        try {
 //            jwtUserIdx = jwtService.getUserIdx();
@@ -88,14 +48,54 @@ public class TrackerController {
 //        if(userInfo == null){
 //            return new BaseResponse<>(INVALID_USER);
 //        }
+//        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+//        if(userIdentity==null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY);
+//        }
 //
+//        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+//        if (existUserIdentity == null){
+//            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+//        }
 //
 //        try {
-//            List<GetTrackerRes> getTrackerResList = trackerProvider.retreiveTracker(year,month,userInfo);
-//            return new BaseResponse<>(SUCCESS, getTrackerResList);
+//            GetTrackerRes getTrackerRes = trackerProvider.retreiveTracker(userIdentity,year,month,userInfo);
+//            return new BaseResponse<>(SUCCESS, getTrackerRes);
 //        } catch (BaseException exception) {
 //            return new BaseResponse<>(exception.getStatus());
 //        }
 //    }
+
+    /**
+     * 트래커 조회하기 API
+     * [GET] /tracker?year=2021&month=7
+     * @RequestParam year, month
+     * @return List<GetTrackerRes>
+     */
+
+    @ResponseBody
+    @GetMapping("/update/tracker")
+    public BaseResponse<List<GetTrackerRes>> getTrackerRes(@RequestParam(value ="year") int year,
+                                                           @RequestParam(value="month") int month) throws BaseException{
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+
+        try {
+            List<GetTrackerRes> getTrackerResList = trackerProvider.retreiveTracker(year,month,userInfo);
+            return new BaseResponse<>(SUCCESS, getTrackerResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 }

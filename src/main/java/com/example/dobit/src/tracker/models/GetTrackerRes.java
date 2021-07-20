@@ -10,6 +10,6 @@ import java.util.List;
 public class GetTrackerRes {
     private final int userIdentityIdx;
     private final List checkDateList;
-    private final Integer checkDateCount;
+    private final List graphDataList;
 
 }
