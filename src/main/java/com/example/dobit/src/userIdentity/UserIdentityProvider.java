@@ -87,7 +87,7 @@ public class UserIdentityProvider {
                 dontHabitName = dontHabit.getDnhName();
             }
 
-            GetIdentitiesRes getIdentitiesRes = new GetIdentitiesRes(userIdentityIdx, userIdentityName, userIdentityColorIdx, userIdentityColorName,doHabitName, dontHabitName);
+            GetIdentitiesRes getIdentitiesRes = new GetIdentitiesRes(userIdentityIdx, userIdentityName, userIdentityColorName,doHabitName, dontHabitName);
             getIdentitiesResList.add(getIdentitiesRes);
         }
         return getIdentitiesResList;
