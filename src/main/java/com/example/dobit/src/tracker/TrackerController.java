@@ -74,7 +74,7 @@ public class TrackerController {
      */
 
     @ResponseBody
-    @GetMapping("/update/tracker")
+    @GetMapping("/tracker")
     public BaseResponse<List<GetTrackerRes>> getTrackerRes(@RequestParam(value ="year") int year,
                                                            @RequestParam(value="month") int month) throws BaseException{
         Integer jwtUserIdx;
