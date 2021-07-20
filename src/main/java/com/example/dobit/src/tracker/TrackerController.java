@@ -11,6 +11,8 @@ import com.example.dobit.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.example.dobit.config.BaseResponseStatus.*;
 
 
@@ -63,5 +65,37 @@ public class TrackerController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
+//    /**
+//     * 트래커 조회하기 API
+//     * [GET] /tracker?year=2021&month=7
+//     * @RequestParam year, month
+//     * @return GetTrackerRes
+//     */
+//
+//    @ResponseBody
+//    @GetMapping("/tracker")
+//    public BaseResponse<List<GetTrackerRes>> getTrackerRes(@RequestParam(value ="year") int year,
+//                                                           @RequestParam(value="month") int month) throws BaseException{
+//        Integer jwtUserIdx;
+//        try {
+//            jwtUserIdx = jwtService.getUserIdx();
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//
+//        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+//        if(userInfo == null){
+//            return new BaseResponse<>(INVALID_USER);
+//        }
+//
+//
+//        try {
+//            List<GetTrackerRes> getTrackerResList = trackerProvider.retreiveTracker(year,month,userInfo);
+//            return new BaseResponse<>(SUCCESS, getTrackerResList);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
 
 }

@@ -23,8 +23,7 @@ import java.util.Set;
 public class TrackerProvider {
     private final DoHabitCheckProvider doHabitCheckProvider;
     private final DontHabitCheckProvider dontHabitCheckProvider;
-
-
+    private final UserIdentityProvider userIdentityProvider;
 
     /**
      * 트래커 조회하기 API
@@ -51,4 +50,41 @@ public class TrackerProvider {
 
         return new GetTrackerRes(userIdentity.getUserIdentityIdx(),checkDateList,checkDateList.size());
     }
+//    /**
+//     * 트래커 조회하기 API
+//     * @param year, month, userInfo
+//     * return List<GetTrackerRes>
+//     */
+//    public List<GetTrackerRes> retreiveTracker(int year, int month, UserInfo userInfo) throws BaseException{
+//        List<GetIdentitiesRes> getIdentitiesResList = userIdentityProvider.retrieveIdentities(userInfo);
+//
+//        List<GetTrackerRes> getTrackerResList = new ArrayList<>();
+//        for (int i=0;i<getIdentitiesResList.size();i++){
+//            UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(getIdentitiesResList.get(i).getUserIdentityIdx());
+//            List<DoHabitCheck> doHabitChecks = doHabitCheckProvider.retrieveDoHabitCheckByUserInfoAndUserIdentityAndYearAndMonth(userInfo,userIdentity,year,month);
+//            List<DontHabitCheck> dontHabitChecks = dontHabitCheckProvider.retrieveDontHabitCheckByUserInfoAndUserIdentityAndYearAndMonth(userInfo,userIdentity,year,month);
+//
+//            List<Integer> doHabitCheckDateList = new ArrayList<>();
+//            for(int j=0;i<doHabitChecks.size();j++){
+//                doHabitCheckDateList.add(doHabitChecks.get(j).getDay());
+//            }
+//            List<Integer> dontHabitCheckDateList = new ArrayList<>();
+//            for(int j=0;i<dontHabitChecks.size();j++){
+//                dontHabitCheckDateList.add(dontHabitChecks.get(j).getDay());
+//            }
+//
+//            Set<Integer> set = new LinkedHashSet<>(doHabitCheckDateList);
+//            set.addAll(dontHabitCheckDateList);
+//            List<Integer> checkDateList = new ArrayList<>(set);
+//
+//            GetTrackerRes getTrackerRes = new GetTrackerRes(userIdentity.getUserIdentityIdx(),checkDateList,checkDateList.size());
+//            getTrackerResList.add(getTrackerRes);
+//        }
+//
+//
+//        return  getTrackerResList;
+//
+//    }
+
+
 }
