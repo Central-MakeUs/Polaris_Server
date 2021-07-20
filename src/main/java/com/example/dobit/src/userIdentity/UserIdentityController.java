@@ -81,11 +81,11 @@ public class UserIdentityController {
      * 정체성 직접 추가하기 API
      * [POST] /direct-identity
      * @RequestBody postDirectIdentityReq
-     * @return BaseResponse<Void>
+     * @return BaseResponse<PostDirectIdentityRes>
      */
     @ResponseBody
     @PostMapping("/direct-identity")
-    public BaseResponse<Void> postDirectIdentity(@RequestBody PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
+    public BaseResponse<PostDirectIdentityRes> postDirectIdentity(@RequestBody PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         Integer jwtUserIdx;
         try {
             jwtUserIdx = jwtService.getUserIdx();
@@ -109,8 +109,8 @@ public class UserIdentityController {
 
 
         try {
-            userIdentityService.createDirectIdentity(userInfo,postDirectIdentityReq);
-            return new BaseResponse<>(SUCCESS);
+            PostDirectIdentityRes postDirectIdentityRes = userIdentityService.createDirectIdentity(userInfo,postDirectIdentityReq);
+            return new BaseResponse<>(SUCCESS,postDirectIdentityRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

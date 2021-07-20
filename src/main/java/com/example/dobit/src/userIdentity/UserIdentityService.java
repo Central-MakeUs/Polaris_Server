@@ -5,6 +5,7 @@ import com.example.dobit.src.identity.IdentityProvider;
 import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.models.PostDirectIdentityReq;
+import com.example.dobit.src.userIdentity.models.PostDirectIdentityRes;
 import com.example.dobit.src.userIdentity.models.PostIdentityReq;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
 import com.example.dobit.src.userIdentityColor.UserIdentityColorProvider;
@@ -53,11 +54,11 @@ public class UserIdentityService {
     /**
      * 정체성 직접 추가하기 API
      * @param userInfo, postDirectIdentityReq
-     * @return void
+     * @return PostDirectIdentityRes
      * @throws BaseException
      */
     @Transactional
-    public void createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
+    public PostDirectIdentityRes createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         String identityName = postDirectIdentityReq.getIdentityName();
         UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(9); //black
         UserIdentity userIdentity = new UserIdentity(userInfo, identityName,userIdentityColor);
@@ -67,6 +68,9 @@ public class UserIdentityService {
             throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
 
         }
+        int userIdentityIdx = userIdentity.getUserIdentityIdx();
+        String userIdentityName = userIdentity.getUserIdentityName();
+        return new PostDirectIdentityRes(userIdentityIdx,userIdentityName);
     }
 
     /**
