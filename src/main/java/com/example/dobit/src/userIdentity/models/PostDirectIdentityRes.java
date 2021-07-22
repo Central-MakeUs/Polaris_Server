@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class PostDirectIdentityRes {
-    private final int userIdentityIdx;
-    private final String userIdentityName;
+    private final int identityIdx;
+    private final String identityName;
 }
