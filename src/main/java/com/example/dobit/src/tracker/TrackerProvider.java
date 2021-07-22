@@ -14,10 +14,9 @@ import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.thymeleaf.util.ListUtils.isEmpty;
 
@@ -65,6 +64,7 @@ public class TrackerProvider {
         List<GetTrackerRes> getTrackerResList = new ArrayList<>();
         for (int i=0;i<getIdentitiesResList.size();i++){
             UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(getIdentitiesResList.get(i).getUserIdentityIdx());
+
             List<DoHabitCheck> doHabitChecks = doHabitCheckProvider.retrieveDoHabitCheckByUserInfoAndUserIdentityAndYearAndMonth(userInfo,userIdentity,year,month);
             List<DontHabitCheck> dontHabitChecks = dontHabitCheckProvider.retrieveDontHabitCheckByUserInfoAndUserIdentityAndYearAndMonth(userInfo,userIdentity,year,month);
 
@@ -82,21 +82,74 @@ public class TrackerProvider {
                 }
             }
 
-            // doHabitCheckDateList,dontHabitCheckDateList 두 리스트 합치되 중복 제거
+            // 두 리스트 합치되 중복 제거
             Set<Integer> set = new LinkedHashSet<>(doHabitCheckDateList);
             set.addAll(dontHabitCheckDateList);
             List<Integer> checkDateList = new ArrayList<>(set);
 
             List graphDataList = new ArrayList<>();
 
-            Integer checkDateCount = checkDateList.size();
-            for(int j=0;j<6;j++ ){
-//                Math.round((result*100)/100.0) // 소수점 둘째자리까지
-                float result = (1.01f)*checkDateCount;
-                graphDataList.add(result);
-                checkDateCount+=30;
+
+
+            long doHabitCheckCount = doHabitCheckProvider.retrieveCountByUserInfoAndUserIdentityAndStatus(userInfo,userIdentity);
+            long dontHabitCheckCount = dontHabitCheckProvider.retrieveCountByUserInfoAndUserIdentityAndStatus(userInfo,userIdentity);
+
+            long habitCheckCount = doHabitCheckCount+dontHabitCheckCount;
+            System.out.println("habitCheckCount:"+habitCheckCount);
+
+            if(habitCheckCount!=0){
+                Date theLatestDHCheckDate = doHabitCheckProvider.retrieveTheLatestDate(userInfo,userIdentity);
+                Date theLatestDHabitCheckDate = dontHabitCheckProvider.retrieveTheLatestDate(userInfo,userIdentity);
+
+                long diffDay=0;
+                if(theLatestDHCheckDate!=null){
+                    try{
+                        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                        Date date = new Date();
+                        String theLatestDoHabitCheckDate = dateFormat.format(theLatestDHCheckDate);
+                        String theLatestDontHabitCheckDate = dateFormat.format(theLatestDHabitCheckDate);
+                        String theCurrentDate = dateFormat.format(date);
+                        String strFormat = "yyyyMMdd";
+                        SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+
+                        Date startDate = sdf.parse(theCurrentDate);
+                        Date endDohabitDate = sdf.parse(theLatestDoHabitCheckDate);
+                        Date endDonthabitDate = sdf.parse(theLatestDontHabitCheckDate);
+
+                        //두날짜 사이의 시간 차이(ms)를 하루 동안의 ms(24시*60분*60초*1000밀리초) 로 나눈다.
+                        long doHabitDiffDay = (startDate.getTime() - endDohabitDate.getTime()) / (24*60*60*1000);
+                        long dontHabitDiffDay = (startDate.getTime() - endDonthabitDate.getTime()) / (24*60*60*1000);
+                        diffDay = Math.max(doHabitDiffDay,dontHabitDiffDay);
+                        System.out.println(diffDay+"일");
+                    }catch(java.text.ParseException e){
+                        e.printStackTrace();
+                    }
+                }
+
+
+                if(diffDay>=2){
+                    habitCheckCount-=diffDay;
+                    for(int j=0;j<6;j++ ){
+                        habitCheckCount+=30;
+                        System.out.println("diffDay>=2");
+                        System.out.println(habitCheckCount+"habitCheckCount");
+                        Double result = Math.pow(1.01f,habitCheckCount);
+                        graphDataList.add(result);
+
+                    }
+                }
+                else{
+                    for(int j=0;j<6;j++ ){
+                        habitCheckCount+=30;
+                        System.out.println("diffDay<2");
+                        System.out.println(habitCheckCount+"habitCheckCount");
+                        Double result = Math.pow(1.01f,habitCheckCount);
+                        graphDataList.add(result);
+                    }
+                }
 
             }
+
 
             GetTrackerRes getTrackerRes = new GetTrackerRes(userIdentity.getUserIdentityIdx(),checkDateList,graphDataList);
             getTrackerResList.add(getTrackerRes);

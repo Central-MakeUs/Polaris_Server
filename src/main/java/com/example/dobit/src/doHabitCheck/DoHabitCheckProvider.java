@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.dobit.config.BaseResponseStatus.*;
@@ -78,6 +79,38 @@ public class DoHabitCheckProvider {
             throw new BaseException(FAILED_TO_FIND_BY_USERINFO_AND_USERIDENTITY_AND_DATE_AND_STATUS);
         }
         return doHabitChecks;
+    }
+
+    /**
+     * userIdx,userIdentityIdx,status로 doHabitCheck 갯수 세기
+     * @param userInfo, userIdentity
+     * @return doHabitCheckCount
+     * @throws BaseException
+     */
+    public long retrieveCountByUserInfoAndUserIdentityAndStatus(UserInfo userInfo, UserIdentity userIdentity) throws BaseException{
+        long doHabitCheckCount;
+        try {
+            doHabitCheckCount = doHabitCheckRepository.countByUserInfoAndUserIdentityAndStatus(userInfo,userIdentity,"ACTIVE");
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_COUNT_BY_USERINFO_AND_USERIDENTITY_AND_STATUS);
+        }
+        return doHabitCheckCount;
+    }
+
+    /**
+     * userIdx,userIdentityIdx,status로 doHabitCheck 가장 최신 데이터 날짜 가져오기
+     * @param userInfo, userIdentity
+     * @return theLatestDate
+     * @throws BaseException
+     */
+    public Date retrieveTheLatestDate(UserInfo userInfo, UserIdentity userIdentity) throws BaseException{
+        Date theLatestDate;
+        try {
+            theLatestDate = doHabitCheckRepository.findByTheLatestDate(userInfo,userIdentity);
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_FIND_BY_THE_LATEST_DATE);
+        }
+        return theLatestDate;
     }
 
 }
