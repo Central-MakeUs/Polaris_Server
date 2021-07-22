@@ -69,7 +69,7 @@ public class HabitProvider {
             if(dontHabit!=null){
                 dontHabitIdx = dontHabit.getDnhIdx();
                 dontHabitName = dontHabit.getDnhName();
-                dontHabitSummary = dontHabit.getDnhAdvantage() + " " + dontHabit.getDnhEnv();
+                dontHabitSummary = dontHabit.getDnhAdvantage() + ", " + dontHabit.getDnhEnv();
                 if(existsDontHabitCheck){
                     isDontHabitCheck = "Y";
                 }
