@@ -232,7 +232,7 @@ public class UserIdentityController {
      * @return BaseResponse<Void>
      */
     @ResponseBody
-    @PatchMapping("/identity/{userIdentityIdx}/color")
+    @PatchMapping("/identity/{userIdentityIdx}")
     public BaseResponse<Void> patchIdentityColor(@PathVariable Integer userIdentityIdx, @RequestBody PatchIdentityReq patchIdentityReq) throws BaseException {
         Integer jwtUserIdx;
         try {
