@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
-public class PatchIdentityColorReq {
+public class PatchIdentityReq {
+    private String userIdentityName;
     private Integer userIdentityColorIdx;
 }
 

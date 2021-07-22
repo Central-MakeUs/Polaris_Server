@@ -224,17 +224,16 @@ public class UserIdentityController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
     /**
-     * 정체성 컬러 수정하기 API
-     * [PATCH] /identity/:userIdentityIdx/color
+     * 정체성 수정하기 API
+     * [PATCH] /identity/:userIdentityIdx
      * @PathVariable userIdentityIdx
-     * @RequestBody patchIdentityColorReq
+     * @RequestBody patchIdentityReq
      * @return BaseResponse<Void>
      */
     @ResponseBody
     @PatchMapping("/identity/{userIdentityIdx}/color")
-    public BaseResponse<Void> patchIdentityColor(@PathVariable Integer userIdentityIdx, @RequestBody PatchIdentityColorReq patchIdentityColorReq) throws BaseException {
+    public BaseResponse<Void> patchIdentityColor(@PathVariable Integer userIdentityIdx, @RequestBody PatchIdentityReq patchIdentityReq) throws BaseException {
         Integer jwtUserIdx;
         try {
             jwtUserIdx = jwtService.getUserIdx();
@@ -256,23 +255,81 @@ public class UserIdentityController {
             return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
         }
 
+        // 추가
+        if(patchIdentityReq.getUserIdentityName() == null || patchIdentityReq.getUserIdentityName().length() == 0){
+            return new BaseResponse<>(EMPTY_IDENTITY_NAME);
+        }
 
-        if (patchIdentityColorReq.getUserIdentityColorIdx() == null || patchIdentityColorReq.getUserIdentityColorIdx() <= 0) {
+        if(patchIdentityReq.getUserIdentityName().length() >= 45){
+            return new BaseResponse<>(INVALID_IDENTITY_NAME);
+        }
+
+
+        if (patchIdentityReq.getUserIdentityColorIdx() == null || patchIdentityReq.getUserIdentityColorIdx() <= 0) {
             return new BaseResponse<>(EMPTY_USERIDENTITYCOLORIDX);
         }
 
-        UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(patchIdentityColorReq.getUserIdentityColorIdx());
+        UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(patchIdentityReq.getUserIdentityColorIdx());
         if(userIdentityColor == null){
             return new BaseResponse<>(INVALID_USER_IDENTITY_COLOR);
         }
 
 
         try {
-            userIdentityService.updateIdentityColor(userIdentity,userIdentityColor);
+            userIdentityService.updateIdentityColor(userIdentity,userIdentityColor,patchIdentityReq.getUserIdentityName() );
             return new BaseResponse<>(SUCCESS);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+//    /**
+//     * 정체성 컬러 수정하기 API
+//     * [PATCH] /identity/:userIdentityIdx/color
+//     * @PathVariable userIdentityIdx
+//     * @RequestBody patchIdentityColorReq
+//     * @return BaseResponse<Void>
+//     */
+//    @ResponseBody
+//    @PatchMapping("/identity/{userIdentityIdx}/color")
+//    public BaseResponse<Void> patchIdentityColor(@PathVariable Integer userIdentityIdx, @RequestBody PatchIdentityColorReq patchIdentityColorReq) throws BaseException {
+//        Integer jwtUserIdx;
+//        try {
+//            jwtUserIdx = jwtService.getUserIdx();
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+//        if(userInfo == null){
+//            return new BaseResponse<>(INVALID_USER);
+//        }
+//
+//        UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+//        if(userIdentity==null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY);
+//        }
+//
+//        Boolean existUserIdentity = userIdentityProvider.retrieveExistingUserIdentity(userInfo,userIdentityIdx);
+//        if (existUserIdentity == null){
+//            return new BaseResponse<>(DO_NOT_MATCH_USER_AND_USERIDENTITYIDX);
+//        }
+//
+//
+//        if (patchIdentityColorReq.getUserIdentityColorIdx() == null || patchIdentityColorReq.getUserIdentityColorIdx() <= 0) {
+//            return new BaseResponse<>(EMPTY_USERIDENTITYCOLORIDX);
+//        }
+//
+//        UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(patchIdentityColorReq.getUserIdentityColorIdx());
+//        if(userIdentityColor == null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY_COLOR);
+//        }
+//
+//
+//        try {
+//            userIdentityService.updateIdentityColor(userIdentity,userIdentityColor);
+//            return new BaseResponse<>(SUCCESS);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
 
 }

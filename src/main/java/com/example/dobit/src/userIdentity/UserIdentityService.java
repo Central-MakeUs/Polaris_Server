@@ -93,13 +93,13 @@ public class UserIdentityService {
 
 
     /**
-     * 정체성 컬러 수정하기 API
-     * @param userIdentity,userIdentityColor
+     * 정체성 수정하기 API
+     * @param userIdentity,patchIdentityReq
      * @return void
      * @throws BaseException
      */
-    public void updateIdentityColor(UserIdentity userIdentity,UserIdentityColor userIdentityColor) throws BaseException{
-
+    public void updateIdentityColor(UserIdentity userIdentity,UserIdentityColor userIdentityColor,String userIdentityName) throws BaseException{
+        userIdentity.setUserIdentityName(userIdentityName);
         userIdentity.setUserIdentityColor(userIdentityColor);
 
         try{
