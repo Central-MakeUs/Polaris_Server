@@ -29,7 +29,7 @@ public enum BaseResponseStatus {
     INVALID_IDENTITYIDX(false, 2039, "유효하지 않은 정체성입니다."),
     EMPTY_IDENTITYLIST(false, 2040, "정체성 리스트를 입력하세요."),
     EMPTY_IDENTITY_NAME(false, 2041, "정체성을 입력하세요."),
-    INVALID_IDENTITY_NAME(false, 2042, "정체성은 20자이내로 입력하세요."),
+    INVALID_IDENTITY_NAME(false, 2042, "정체성은 45자이내로 입력하세요."),
     EMPTY_USERIDX(false, 2043, "userIdx를 입력하세요."),
     INVALID_USER_IDENTITY(false, 2044, "유효하지않은 유저정체성입니다."),
     DO_NOT_MATCH_USER_AND_USERIDENTITYIDX(false, 2045, "userIdentityIdx와 user가 일치하지 않습니다."),
