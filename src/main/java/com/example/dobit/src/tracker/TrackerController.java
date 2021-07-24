@@ -6,7 +6,6 @@ import com.example.dobit.src.tracker.models.GetTrackerRes;
 import com.example.dobit.src.user.UserInfoProvider;
 import com.example.dobit.src.user.models.UserInfo;
 import com.example.dobit.src.userIdentity.UserIdentityProvider;
-import com.example.dobit.src.userIdentity.models.UserIdentity;
 import com.example.dobit.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

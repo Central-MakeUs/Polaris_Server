@@ -1,8 +1,6 @@
 package com.example.dobit.src.dontHabitCheck;
 
 import com.example.dobit.config.BaseException;
-import com.example.dobit.src.doHabitCheck.models.DoHabitCheck;
-import com.example.dobit.src.dontHabit.DontHabitProvider;
 import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.dontHabitCheck.models.DontHabitCheck;
 import com.example.dobit.src.user.models.UserInfo;

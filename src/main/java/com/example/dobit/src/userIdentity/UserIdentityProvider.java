@@ -134,18 +134,6 @@ public class UserIdentityProvider {
 
         return existUserIdentity;
     }
-//
-//    /**
-//     * 유저로 유저정체성 조회
-//     * @param userInfo
-//     * @return UserIdentity
-//     * @throws BaseException
-//     */
-//    public UserIdentity retrieveUserIdentityByUserInfo(UserInfo userInfo) throws BaseException{
-//        UserIdentity userIdentity;
-//        try{
-//            userIdentity = userIdentityRepository.findByUserInfoAndStatus()
-//        }
-//    }
+
 
 }

@@ -2,7 +2,6 @@ package com.example.dobit.src.dontHabit;
 
 import com.example.dobit.config.BaseException;
 import com.example.dobit.config.BaseResponse;
-import com.example.dobit.src.doHabit.models.DoHabit;
 import com.example.dobit.src.dontHabit.models.DontHabit;
 import com.example.dobit.src.dontHabit.models.GetIdentityDontHabitRes;
 import com.example.dobit.src.dontHabit.models.PatchIdentityDontHabitReq;
