@@ -4,10 +4,7 @@ import com.example.dobit.config.BaseException;
 import com.example.dobit.src.identity.IdentityProvider;
 import com.example.dobit.src.identity.models.Identity;
 import com.example.dobit.src.user.models.UserInfo;
-import com.example.dobit.src.userIdentity.models.PostDirectIdentityReq;
-import com.example.dobit.src.userIdentity.models.PostDirectIdentityRes;
-import com.example.dobit.src.userIdentity.models.PostIdentityReq;
-import com.example.dobit.src.userIdentity.models.UserIdentity;
+import com.example.dobit.src.userIdentity.models.*;
 import com.example.dobit.src.userIdentityColor.UserIdentityColorProvider;
 import com.example.dobit.src.userIdentityColor.models.UserIdentityColor;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +24,7 @@ public class UserIdentityService {
     private final UserIdentityColorProvider userIdentityColorProvider;
 
     /**
-     * 정체성 추가하기 API
+     * 정체성 생성하기 API
      * @param userInfo, postIdentityReq
      * @return void
      * @throws BaseException
@@ -52,13 +49,13 @@ public class UserIdentityService {
     }
 
     /**
-     * 정체성 직접 추가하기 API
+     * 정체성 직접 생성하기 API
      * @param userInfo, postDirectIdentityReq
      * @return PostDirectIdentityRes
      * @throws BaseException
      */
     @Transactional
-    public PostDirectIdentityRes createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
+    public PostIdentityRes createDirectIdentity(UserInfo userInfo , PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         String identityName = postDirectIdentityReq.getIdentityName();
         UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(9); //black
         UserIdentity userIdentity = new UserIdentity(userInfo, identityName,userIdentityColor);
@@ -70,7 +67,36 @@ public class UserIdentityService {
         }
         int userIdentityIdx = userIdentity.getUserIdentityIdx();
         String userIdentityName = userIdentity.getUserIdentityName();
-        return new PostDirectIdentityRes(userIdentityIdx,userIdentityName);
+        return new PostIdentityRes(userIdentityIdx,userIdentityName);
+    }
+
+    /**
+     * 정체성 추가하기 API
+     * @param userInfo, postIdentityPlusReq
+     * @return PostIdentityRes
+     * @throws BaseException
+     */
+    @Transactional
+    public PostIdentityRes createIdentityPlus(UserInfo userInfo , PostIdentityPlusReq postIdentityPlusReq) throws BaseException {
+        String identityName = postIdentityPlusReq.getIdentityName();
+        Integer colorIdx = postIdentityPlusReq.getUserIdentityColorIdx();
+        UserIdentityColor userIdentityColor;
+        if(colorIdx==null){
+            userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(9); //black
+        }
+        else{
+            userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(colorIdx);
+        }
+        UserIdentity userIdentity = new UserIdentity(userInfo, identityName,userIdentityColor);
+        try {
+            userIdentityRepository.save(userIdentity);
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_SAVE_USER_IDENTITY);
+
+        }
+        int userIdentityIdx = userIdentity.getUserIdentityIdx();
+        String userIdentityName = userIdentity.getUserIdentityName();
+        return new PostIdentityRes(userIdentityIdx,userIdentityName);
     }
 
     /**

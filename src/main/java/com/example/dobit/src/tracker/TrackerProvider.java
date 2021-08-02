@@ -150,7 +150,8 @@ public class TrackerProvider {
 
 
 
-            GetTrackerRes getTrackerRes = new GetTrackerRes(userIdentity.getUserIdentityIdx(),checkDateList,graphDataList);
+            GetTrackerRes getTrackerRes = new GetTrackerRes(userIdentity.getUserIdentityIdx(),userIdentity.getUserIdentityName(),
+                                                            userIdentity.getUserIdentityColor().getUserIdentityColorName(),checkDateList,graphDataList);
             getTrackerResList.add(getTrackerRes);
         }
 

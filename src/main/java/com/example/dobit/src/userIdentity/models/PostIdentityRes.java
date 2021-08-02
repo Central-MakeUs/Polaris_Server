@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PostDirectIdentityRes {
+public class PostIdentityRes {
     private final int identityIdx;
     private final String identityName;
 }

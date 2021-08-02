@@ -41,6 +41,7 @@ public class HabitProvider {
         for (int i = 0; i< getIdentitiesResList.size(); i++){
             Integer userIdentityIdx = getIdentitiesResList.get(i).getUserIdentityIdx();
             UserIdentity userIdentity = userIdentityProvider.retrieveUserIdentityByUserIdentityIdx(userIdentityIdx);
+            String userIdentityColorName = userIdentity.getUserIdentityColor().getUserIdentityColorName();
             DoHabit doHabit = doHabitProvider.retrieveDoHabitByUserIdentity(userIdentity);
             DontHabit dontHabit = dontHabitProvider.retrieveDontHabitByUserIdentity(userIdentity);
             Boolean existsDoHabitCheck = doHabitCheckProvider.retrieveExistingDoHabitCheckToCurrentDate(userInfo,doHabit);
@@ -53,7 +54,7 @@ public class HabitProvider {
             if(doHabit!=null){
                 doHabitIdx = doHabit.getDhIdx();
                 doHabitName = doHabit.getDhName();
-                doHabitSummary = doHabit.getDhWhen() + "에" + doHabit.getDhWhere() +"에서" + doHabit.getDhStart();
+                doHabitSummary = doHabit.getDhWhen() + ", " + doHabit.getDhWhere() +", " + doHabit.getDhStart();
                 if(existsDoHabitCheck){
                     isDoHabitCheck = "Y";
                 }
@@ -77,7 +78,7 @@ public class HabitProvider {
                     isDontHabitCheck = "N";
                 }
             }
-            GetHabitRes getHabitRes = new GetHabitRes(userIdentityIdx,doHabitIdx,doHabitName,doHabitSummary,isDoHabitCheck,dontHabitIdx,dontHabitName,dontHabitSummary,isDontHabitCheck);
+            GetHabitRes getHabitRes = new GetHabitRes(userIdentityIdx,doHabitIdx,doHabitName,doHabitSummary,isDoHabitCheck,dontHabitIdx,dontHabitName,dontHabitSummary,isDontHabitCheck,userIdentityColorName);
             getHabitResList.add(getHabitRes);
         }
 

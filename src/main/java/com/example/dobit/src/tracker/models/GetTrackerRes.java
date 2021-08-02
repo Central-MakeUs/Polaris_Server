@@ -9,6 +9,8 @@ import java.util.List;
 @AllArgsConstructor
 public class GetTrackerRes {
     private final int userIdentityIdx;
+    private final String userIdentityName;
+    private final String userIdentityColorName;
     private final List checkDateList;
     private final List graphDataList;
 

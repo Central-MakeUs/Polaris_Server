@@ -22,7 +22,7 @@ public enum BaseResponseStatus {
     WRONG_PASSWORD(false, 2032, "비밀번호를 다시 입력해주세요."),
     DO_NOT_MATCH_PASSWORD(false, 2033, "비밀번호가 일치하지 않습니다."),
     EMPTY_NICKNAME(false, 2034, "닉네임을 입력해주세요."),
-    INVALID_PASSWORD(false, 2035, "유효하지 않은 패스워드입니다. 최소 8자리면서 숫자, 문자, 특수문자 각각 1개 이상 포함하십시오."),
+    INVALID_PASSWORD(false, 2035, "최소 8자리면서 숫자, 문자, 특수문자 각각 1개 이상 포함하십시오."),
     EXIST_EMAIL(false, 2036, "존재하는 이메일입니다."),
     INVALID_USERIDX(false, 2037, "유효하지 않은 userIdx입니다."),
     INVALID_USER(false, 2038, "유효하지 않은 user입니다."),

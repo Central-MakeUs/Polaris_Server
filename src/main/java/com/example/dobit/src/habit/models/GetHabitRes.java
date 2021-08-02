@@ -17,4 +17,5 @@ public class GetHabitRes {
     private final String dontHabitName;
     private final String dontHabitSummary;
     private final String isDontHabitCheck;
+    private final String userIdentityColorName;
 }

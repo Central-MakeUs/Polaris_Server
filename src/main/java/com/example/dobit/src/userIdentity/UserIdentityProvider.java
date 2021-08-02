@@ -104,15 +104,23 @@ public class UserIdentityProvider {
         int userIdentityIdx = userIdentity.getUserIdentityIdx();
         String userIdentityName = userIdentity.getUserIdentityName();
         DoHabit doHabit = doHabitProvider.retrieveDoHabitByUserIdentity(userIdentity);
-        int doHabitIdx = doHabit.getDhIdx();
-        String doHabitName = doHabit.getDhName();
         DontHabit dontHabit = dontHabitProvider.retrieveDontHabitByUserIdentity(userIdentity);
-        int dontHabitIdx = dontHabit.getDnhIdx();
-        String dontHabitName = dontHabit.getDnhName();
+        String doHabitName=null;
+        String donHabitName = null;
+        Integer doHabitIdx = null;
+        Integer donHabitIdx = null;
+        if (doHabit!=null){
+            doHabitIdx = doHabit.getDhIdx();
+            doHabitName = doHabit.getDhName();
+        }
+        if (dontHabit!=null){
+            donHabitIdx = dontHabit.getDnhIdx();
+            donHabitName = dontHabit.getDnhName();
+        }
         int userIdentityColorIdx = userIdentity.getUserIdentityColor().getUserIdentityColorIdx();
         String userIdentityColorName = userIdentity.getUserIdentityColor().getUserIdentityColorName();
 
-        return new GetIdentityRes(userIdentityIdx,userIdentityName,doHabitIdx,doHabitName,dontHabitIdx,dontHabitName,userIdentityColorIdx,userIdentityColorName);
+        return new GetIdentityRes(userIdentityIdx,userIdentityName,doHabitIdx,doHabitName,donHabitIdx,donHabitName,userIdentityColorIdx,userIdentityColorName);
 
     }
 

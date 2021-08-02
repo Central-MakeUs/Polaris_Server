@@ -14,6 +14,8 @@ import com.example.dobit.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.dobit.config.BaseResponseStatus.*;
@@ -31,7 +33,7 @@ public class UserIdentityController {
 
 
     /**
-     * 정체성 추가하기 API
+     * 정체성 생성하기 API
      * [POST] /identity
      * @RequestBody postIdentityReq
      * @return BaseResponse<Void>
@@ -78,14 +80,14 @@ public class UserIdentityController {
 
 
     /**
-     * 정체성 직접 추가하기 API
+     * 정체성 직접 생성하기 API
      * [POST] /direct-identity
      * @RequestBody postDirectIdentityReq
      * @return BaseResponse<PostDirectIdentityRes>
      */
     @ResponseBody
     @PostMapping("/direct-identity")
-    public BaseResponse<PostDirectIdentityRes> postDirectIdentity(@RequestBody PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
+    public BaseResponse<PostIdentityRes> postDirectIdentity(@RequestBody PostDirectIdentityReq postDirectIdentityReq) throws BaseException {
         Integer jwtUserIdx;
         try {
             jwtUserIdx = jwtService.getUserIdx();
@@ -109,8 +111,52 @@ public class UserIdentityController {
 
 
         try {
-            PostDirectIdentityRes postDirectIdentityRes = userIdentityService.createDirectIdentity(userInfo,postDirectIdentityReq);
-            return new BaseResponse<>(SUCCESS,postDirectIdentityRes);
+            PostIdentityRes postIdentityRes = userIdentityService.createDirectIdentity(userInfo,postDirectIdentityReq);
+            return new BaseResponse<>(SUCCESS, postIdentityRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
+    /**
+     * 정체성 추가하기 API
+     * [POST] /identity/plus
+     * @RequestBody postIdentityPlusReq
+     * @return BaseResponse<PostIdentityRes>
+     */
+    @ResponseBody
+    @PostMapping("/identity/plus")
+    public BaseResponse<PostIdentityRes> postIdentityPlus(@RequestBody PostIdentityPlusReq postIdentityPlusReq) throws BaseException {
+        Integer jwtUserIdx;
+        try {
+            jwtUserIdx = jwtService.getUserIdx();
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+        UserInfo userInfo = userInfoProvider.retrieveUserByUserIdx(jwtUserIdx);
+        if(userInfo == null){
+            return new BaseResponse<>(INVALID_USER);
+        }
+
+
+        if(postIdentityPlusReq.getIdentityName() == null || postIdentityPlusReq.getIdentityName().length() == 0){
+            return new BaseResponse<>(EMPTY_IDENTITY_NAME);
+        }
+
+        if(postIdentityPlusReq.getUserIdentityColorIdx()!=null){
+            ArrayList<Integer> colorList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
+            if(!colorList.contains(postIdentityPlusReq.getUserIdentityColorIdx())){
+                return new BaseResponse<>(INVALID_USER_IDENTITY_COLOR);
+            }
+        }
+
+
+
+        try {
+            PostIdentityRes postIdentityRes = userIdentityService.createIdentityPlus(userInfo,postIdentityPlusReq);
+            return new BaseResponse<>(SUCCESS, postIdentityRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -264,15 +310,19 @@ public class UserIdentityController {
             return new BaseResponse<>(INVALID_IDENTITY_NAME);
         }
 
-
         if (patchIdentityReq.getUserIdentityColorIdx() == null || patchIdentityReq.getUserIdentityColorIdx() <= 0) {
             return new BaseResponse<>(EMPTY_USERIDENTITYCOLORIDX);
         }
 
-        UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(patchIdentityReq.getUserIdentityColorIdx());
-        if(userIdentityColor == null){
+        ArrayList<Integer> colorList = new ArrayList<>(Arrays.asList(1,2,3,4,5,6,7,8,9));
+        if(!colorList.contains(patchIdentityReq.getUserIdentityColorIdx())){
             return new BaseResponse<>(INVALID_USER_IDENTITY_COLOR);
         }
+
+        UserIdentityColor userIdentityColor = userIdentityColorProvider.retrieveUserIdentityColorByUserIdentityColorIdx(patchIdentityReq.getUserIdentityColorIdx());
+//        if(userIdentityColor == null){
+//            return new BaseResponse<>(INVALID_USER_IDENTITY_COLOR);
+//        }
 
 
         try {

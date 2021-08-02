@@ -10,6 +10,6 @@ public class GetIdentitiesRes {
     private final String userIdentityName;
 //    private final Integer userIdentityColorIdx;
     private final String userIdentityColorName;
-    private final String doHabit;
-    private final String doNotHabit;
+    private final String doHabitName;
+    private final String dontHabitName;
 }
