@@ -2,7 +2,6 @@ package com.example.dobit.src.user.models;
 
 import com.example.dobit.config.BaseEntity;
 import com.example.dobit.src.dontHabitCheck.models.DontHabitCheck;
-import com.example.dobit.src.dontMotive.models.DontMotive;
 import com.example.dobit.src.userIdentity.models.UserIdentity;
 import lombok.*;
 
@@ -10,8 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PUBLIC) // ??
+@EqualsAndHashCode(callSuper = false) // ??
 @Data
 @Entity
 @Table(name = "UserInfo")
@@ -61,5 +60,5 @@ public class UserInfo extends BaseEntity {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-    }
+    } // ??
 }
